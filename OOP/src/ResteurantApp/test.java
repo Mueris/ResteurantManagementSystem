@@ -8,7 +8,8 @@ public class test {
 	User[] users=new User[20];//DEVELOPER: Another Data Type can be used for the users array bcuz the number is unexpected such as arraylist, linkedlist.
 	//CircularQueue  orders = new CircularQueue();//DEVELOPER: is a priority queue better, bcuz all foods doesnt have the same preperation time?
 	Table table = new Table();
-	
+	Swing a = new Swing();
+	a.menu();
 	}
 	protected void fileReader(String file) {//a function to read file
 	//when the program is started program reads files and implements users.

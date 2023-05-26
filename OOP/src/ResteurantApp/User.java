@@ -6,6 +6,10 @@ public abstract class User implements UserTemp {
 	private String surname; 
 	private int phoneNumber; 
 	private String email;
+	private String type;
+	
+	
+	
 	public String getName() {
 		return name;
 	}
@@ -29,6 +33,12 @@ public abstract class User implements UserTemp {
 	}
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
 	}
 	
 	

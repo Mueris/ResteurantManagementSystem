@@ -9,6 +9,7 @@ public interface UserTemp<T> {
 		 * The process must be done by its ID number
 		 */
 		
+		
 	}
 	public default int IDCalculator(String info) {
 		/**

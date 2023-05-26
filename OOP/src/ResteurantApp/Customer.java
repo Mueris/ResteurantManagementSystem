@@ -14,5 +14,5 @@ public class Customer extends User  {
 	}
 	public void setUserID(int userID) {
 		this.userID = userID;
-	}//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
+	}
 }
