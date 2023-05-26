@@ -5,7 +5,7 @@ public class Table implements TableInterface{
 	 private Order[] Orders; 
 	 private int TableNumber;
 	 private boolean isTableAvaliable;
-	 private boolean tableUser;//shows the amount of user using the table currently, DEVELOPER: maybe thisvalue can be a standart values by that more then this amount is not accepted.
+	 private Customer[] customers;//keeps the customers in the table
 	 public Order[] getOrders() {
 		return Orders;
 	}
@@ -24,11 +24,11 @@ public class Table implements TableInterface{
 	public void setTableAvaliable(boolean isTableAvaliable) {
 		this.isTableAvaliable = isTableAvaliable;
 	}
-	public boolean isTableUser() {
-		return tableUser;
+	public Customer[] getCustomers() {
+		return customers;
 	}
-	public void setTableUser(boolean tableUser) {
-		this.tableUser = tableUser;
+	public void setCustomers(Customer[] customers) {
+		this.customers = customers;
 	}
 	
 	

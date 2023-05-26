@@ -3,8 +3,8 @@ package ResteurantApp;
 
 public class Order {
 	private Product product;
-	private int UserID;//DEVELOPER: all orders can be associated with a uniqe userID by that users can pay for their own orders and payment would be easier. Should it be associated??
-	
+	private int orderID;
+	private int CustomerID;
 	private int ProductQuantity; 
 	private int TableNumber;
 	private boolean isDelivered;//determines whether the order is delivered or not by this employees can see what to prepare
@@ -31,5 +31,18 @@ public class Order {
 	}
 	public void setDelivered(boolean isDelivered) {
 		this.isDelivered = isDelivered;
+	}
+
+	public int getOrderID() {
+		return orderID;
+	}
+	public void setOrderID(int orderID) {
+		this.orderID = orderID;
+	}
+	public int getCustomerID() {
+		return CustomerID;
+	}
+	public void setCustomerID(int customerID) {
+		CustomerID = customerID;
 	}
 }

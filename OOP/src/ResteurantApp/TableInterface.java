@@ -25,6 +25,10 @@ public interface TableInterface {
 		 *  This method must be called to get order
 		 */
 	}
+	public default void addOrder(Order[] orders, Product product, int amount) {
+		/**adds new products to the chosen order.*/
+		
+	}
 	public default void payForTheTable() {
 		/**
 		 * @interface EditDialogField
@@ -53,5 +57,21 @@ public interface TableInterface {
 	 * 
 	 */
 		return 0;
+	}
+	public default void addCustomer(int CustomerID){
+		/**
+		 * @interface EditDialogField
+		 * adds Customer to the table
+		 * This method might be called more then ones.
+		 */
+		
+	}
+	public default void deleteOrder(Order[] orders, int orderID) {
+		/**deletes the chosen product if exists in the order. Deletes the order from all sections
+		 *  If it is not exist nothing happens.**/
+	}
+	public default void closeOrder(Order order) {
+		/**if the table order is associated is closed or done Order can be closed by this method.
+		 this step should be called all the time when a table is done**/
 	}
 }
