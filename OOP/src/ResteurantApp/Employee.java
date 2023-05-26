@@ -1,6 +1,6 @@
 package ResteurantApp;
 
-public class Employee extends User {
+public class Employee extends User  {
 	private String EmployeePrice;
 	private String EmployeePosition; 
 	private int EmployeeID;
