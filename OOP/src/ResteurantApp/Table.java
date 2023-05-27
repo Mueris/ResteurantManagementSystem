@@ -1,22 +1,24 @@
 package ResteurantApp;
 
+import java.util.*;
 
 public class Table implements TableInterface{
-	 private Order[] Orders; 
-	 private int TableNumber;
+	 private LinkedList<Order> orders; 
+	 private int tableNumber;
 	 private boolean isTableAvaliable;
-	 private Customer[] customers;//keeps the customers in the table
-	 public Order[] getOrders() {
-		return Orders;
+	 private LinkedList<Customer> customers;//keeps the customers in the table
+	 
+	 public LinkedList<Order> getOrders() {
+		return orders;
 	}
-	public void setOrders(Order[] orders) {
-		Orders = orders;
+	public void setOrders(LinkedList<Order> orders) {
+		this.orders = orders;
 	}
 	public int getTableNumber() {
-		return TableNumber;
+		return tableNumber;
 	}
 	public void setTableNumber(int tableNumber) {
-		TableNumber = tableNumber;
+		this.tableNumber = tableNumber;
 	}
 	public boolean isTableAvaliable() {
 		return isTableAvaliable;
@@ -24,12 +26,77 @@ public class Table implements TableInterface{
 	public void setTableAvaliable(boolean isTableAvaliable) {
 		this.isTableAvaliable = isTableAvaliable;
 	}
-	public Customer[] getCustomers() {
+	public LinkedList<Customer> getCustomers() {
 		return customers;
 	}
-	public void setCustomers(Customer[] customers) {
+	public void setCustomers(LinkedList<Customer> customers) {
 		this.customers = customers;
 	}
+	
+	public void addOrder(Order order) {
+		orders.add(order);
+	}
+	
+	/*public Order selectOrder(int orderID) {
+		for(int i = 0; i < orders.size(); i++) {
+			if(orders.get(i).getOrderID() == orderID)
+				return orders.get(i);
+		}
+		return null;
+	}*/
+	
+	public void deleteOrder(Order order) {
+		for(int i = 0; i < orders.size(); i++) {
+			if(orders.get(i) == order)
+				orders.remove(i);
+		}
+	}
+	
+	public void addCustomer(Customer customer) {
+		customers.add(customer);
+	}
+	
+	/*public Customer selectCustomer(int customerID) {
+		for(int i = 0; i < orders.size(); i++) {
+			if(orders.get(i).getOrderID() == customerID)
+				return customers.get(i);
+		}
+		return null;
+	}*/
+	
+	public void deleteCustomer(Customer customer) {
+		for(int i = 0; i < orders.size(); i++) {
+			if(customers.get(i) == customer)
+				customers.remove(i);
+		}
+	}
+	
+	public int goDutch(Customer customer) {
+		int sum = 0;
+		
+		for(int i = 0; i < orders.size(); i++) {
+			if(orders.get(i).getCustomerID() == customer.getUserID()) {
+				sum += (orders.get(i).getProduct().getPrice() * orders.get(i).getProductQuantity());
+				orders.remove(i);
+			}
+		}
+		return sum;
+	}
+	
+	public int payOrders() {
+		int sum = 0;
+		for(int i = 0; i < orders.size(); i++) {
+			sum += (orders.get(i).getProduct().getPrice() * orders.get(i).getProductQuantity());
+			orders.remove(i);
+		}
+		return sum;
+	}
+	
+	public int useCupon(int price, int discountCupon) {
+		price -= discountCupon;
+		return price;
+	}
+	
 	
 	
 }
