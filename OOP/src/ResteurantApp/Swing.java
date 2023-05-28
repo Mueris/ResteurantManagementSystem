@@ -3,20 +3,46 @@ import java.awt.Color;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 	import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import javax.swing.*;
 public class Swing {
-	//this class will be used to implement GUI to the project. All frontend operations will be done in this part.
-	public void menu() {
+	private boolean customerLogin;
+	private boolean employeeLogin;
+	private boolean adminLogin;
+	private final boolean UserLogin=customerLogin || employeeLogin || adminLogin;//if user try to ent
+	public boolean isCustomerLogin() {
+		return customerLogin;
+	}
+	public void setCustomerLogin(boolean customerLogin) {
+		this.customerLogin = customerLogin;
+	}
+	public boolean isEmployeeLogin() {
+		return employeeLogin;
+	}
+	public void setEmployeeLogin(boolean employeeLogin) {
+		this.employeeLogin = employeeLogin;
+	}
+	public boolean isAdminLogin() {
+		return adminLogin;
+	}
+	public void setAdminLogin(boolean adminLogin) {
+		this.adminLogin = adminLogin;
+	}
+	public boolean isUserLogin() {
+		return UserLogin;
+	}
+	//this class will be used to implement GUI to the project. menu parts will be done in this section
+	public void firstMenu() {
 		JFrame frame = new JFrame();	
-		JButton signButton = new JButton();
-		JButton LoginButton = new JButton();
-		JButton TableButton = new JButton();
-		JButton exitButton= new JButton();
+		JButton signButton = new JButton("Sign-in");
+		JButton LoginButton = new JButton("Log-in");
+		JButton exitButton= new JButton("Exit");//A POP UP CAN BE SHOWN "ARE YOU SURE?"
 		JLabel label1=new JLabel();
 		
-		signButton.addActionListener(new ActionListener() {
+		signButton.addActionListener(new ActionListener() {//sign up button listener
 		        public void actionPerformed(ActionEvent e) {
 		        	frame.dispose();
 					frame.setVisible(false);
@@ -24,21 +50,35 @@ public class Swing {
 
 		        }
 		    });
+		LoginButton.addActionListener(new ActionListener() {//Login Button Listener
+	        public void actionPerformed(ActionEvent e) {
+	        	frame.dispose();
+				frame.setVisible(false);
+				Login log = new Login();
+	        	log.login();    
+
+	        }
+	    });
+		exitButton.addActionListener(new ActionListener() {//FILEWRITER FUNCTION WILL BE CALLED IN THIS SECTION
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				frame.dispose();
+				frame.setVisible(false);
+				System.exit(0);
+			}
+		});
 		
 		
-		signButton.setText("Sign-in");
-		LoginButton.setText("Log-in");
-		TableButton.setText("Tables");
-		exitButton.setText("exit");
 		label1.setText("WELCOME TO RESTEURANT MANAGEMENT SYSTEM");
 		
 		
 		
-		label1.setBounds(225,50,400,100);
-		signButton.setBounds(250, 150, 200, 100);
-		LoginButton.setBounds(250, 250, 200, 100);
-		TableButton.setBounds(250, 350, 200, 100);
+		label1.setBounds(200,150,400,100);//Label location arrengements
+		signButton.setBounds(250, 250, 200, 100);
+		LoginButton.setBounds(250, 350, 200, 100);
 		exitButton.setBounds(250, 450, 200, 100);
+		
 		frame.setSize(800,800);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
@@ -47,7 +87,6 @@ public class Swing {
 		
 		frame.add(signButton);
 		frame.add(LoginButton);
-		frame.add(TableButton);
 		frame.add(exitButton);
 		frame.add(label1);
 		
@@ -58,19 +97,21 @@ public class Swing {
 		
 		
 	}
+
+
 	public void SignIn() {//Sign operation
 		JFrame signFrame=new JFrame();
-		//initiallize Labels
+		//Initialize Labels
 		JLabel nameLabel= new JLabel("Please Enter Your First Name");
 		JLabel lastNameLabel= new JLabel("Please Enter Your Last Name");
 		JLabel phoneNumberLabel= new JLabel("Please Enter Your phone Number");
 		JLabel mailLabel= new JLabel("Please Enter Your email address");
 		JLabel typeLabel= new JLabel("Please The account Type as: Employee | Customer ");
-		//initiallize Buttons
+		//Initialize Buttons
 		JButton okayButton= new JButton();
 		JButton exitButton=new JButton();
 		
-		okayButton.setText("GO!");
+		okayButton.setText("Sign");
 		exitButton.setText("menu");
 		
 		
@@ -79,7 +120,7 @@ public class Swing {
 		JTextField phoneNumberField= new JTextField();
 		JTextField mailField= new JTextField();
 		JTextField typeField= new JTextField();
-		//arrenging the bounds
+		//,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,, the bounds
 		nameLabel.setBounds(100, 70, 250, 30);
 		nameField.setBounds(100, 100, 250, 40);
 		
@@ -131,7 +172,7 @@ public class Swing {
 	        public void actionPerformed(ActionEvent e) {
 	        	signFrame.dispose();
 	        	signFrame.setVisible(false);
-	        	menu();    
+	        	firstMenu();    
 
 	        }
 	    });
@@ -153,6 +194,149 @@ public class Swing {
 		signFrame.add(typeLabel);
 		signFrame.add(okayButton);
 		signFrame.add(exitButton);	
+	}
+	
+	public void employeeScreen() {//provides a special view for employee
+		if(isEmployeeLogin()) {
+			
+			JFrame employeeScreenFrame = new JFrame();
+			//necessary button initialization
+			JButton orders = new JButton("Orders");
+			JButton tables = new JButton("Tables");
+			JButton logOut = new JButton("Log Out");
+			JButton exit = new JButton("exit");
+			
+			JLabel wellcomeText = new JLabel("Welcome Employee! Please choose your operation");
+			
+			tables.setBackground(Color.GREEN);
+			//arranging the bounds
+			orders.setBounds(250,200,200,100);
+			tables.setBounds(250,300,200,100);
+			logOut.setBounds(250,400,200,100);
+			exit.setBounds(250,500,200,100);
+			
+			wellcomeText.setBounds(230,105,450,100);
+			//button operations
+			orders.addActionListener(new ActionListener() {//Order screen listener
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+			});
+			tables.addActionListener(new ActionListener() {//tables screen listener
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+			});
+			logOut.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					setEmployeeLogin(false);
+					employeeScreenFrame.dispose();
+					firstMenu();//return first menu, log out
+					
+				}
+			});
+			exit.addActionListener(new ActionListener() {//exit button listener
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					employeeScreenFrame.dispose();
+					System.exit(0);//exit program
+					
+				}
+			});
+			
+			
+			employeeScreenFrame.setSize(800,800);
+			employeeScreenFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			employeeScreenFrame.setVisible(true);
+			employeeScreenFrame.getContentPane().setLayout(null);
+			
+			employeeScreenFrame.add(exit);
+			employeeScreenFrame.add(orders);
+			employeeScreenFrame.add(tables);
+			employeeScreenFrame.add(logOut);
+			employeeScreenFrame.add(wellcomeText);
+			
+		}
+			
+	}
+	public void adminScreen() {//provides a special view for admin
+		if(isAdminLogin()) {
+			JFrame adminScreenFrame = new JFrame();
+			JLabel welcomeLbl = new JLabel("Welcome admin Please Choose your Operation");
+			//Button initialization
+			JButton financalBtn = new JButton("Financal");
+			JButton employeesBtn = new JButton("Employees");
+			JButton logOutBtn = new JButton("LogOut");
+			JButton exitBtn = new JButton("Exit");
+			
+			welcomeLbl.setBounds(230,105,450,100);
+			//Bound operations
+			financalBtn.setBounds(250,200,200,100);
+			employeesBtn.setBounds(250,300,200,100);
+			logOutBtn.setBounds(250,400,200,100);
+			exitBtn.setBounds(250,500,200,100);
+			//Button setters
+			financalBtn.addActionListener(new ActionListener() {//Shows financal variables when selected.
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+			});
+			
+			employeesBtn.addActionListener(new ActionListener() {//Shows employees when selected
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+			});
+			logOutBtn.addActionListener(new ActionListener() {//Log out listener
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					setAdminLogin(false);
+					adminScreenFrame.dispose();
+					firstMenu();//return first menu, log out
+					
+				}
+			});
+			exitBtn.addActionListener(new ActionListener() {//Exit Button Listener
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					adminScreenFrame.dispose();
+					System.exit(0);//exit program
+					
+				}
+			});
+			
+			
+			adminScreenFrame.setSize(800,800);
+			adminScreenFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			adminScreenFrame.setVisible(true);
+			adminScreenFrame.getContentPane().setLayout(null);
+			
+			adminScreenFrame.add(financalBtn);
+			adminScreenFrame.add(employeesBtn);
+			adminScreenFrame.add(logOutBtn);
+			adminScreenFrame.add(exitBtn);
+			adminScreenFrame.add(welcomeLbl);
+			
+			
+		}
+		
 	}
 	
 }

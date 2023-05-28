@@ -9,7 +9,7 @@ public class test {
 	//CircularQueue  orders = new CircularQueue();//DEVELOPER: is a priority queue better, bcuz all foods doesnt have the same preperation time?
 	Table table = new Table();
 	Swing a = new Swing();
-	a.menu();
+	a.firstMenu();
 	}
 	protected void fileReader(String file) {//a function to read file
 	//when the program is started program reads files and implements users.
