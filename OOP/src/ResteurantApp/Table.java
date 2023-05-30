@@ -2,15 +2,24 @@ package ResteurantApp;
 
 import java.util.*;
 
-public class Table implements TableInterface{
+public class Table implements TableInterface {
 	 private LinkedList<Order> orders; 
 	 private int tableNumber;
 	 private boolean isTableAvaliable;
 	 private LinkedList<Customer> customers;//keeps the customers in the table
 	 
+	 
+	 public Table(LinkedList<Order> orders, int tableNumber, boolean isAvailable, LinkedList<Customer> customers ) {
+		 this.orders = orders;
+		 this.tableNumber = tableNumber;
+		 this.isTableAvaliable = isAvailable;
+		 this.customers = customers;
+	 }
+	 
 	 public LinkedList<Order> getOrders() {
 		return orders;
 	}
+	 
 	public void setOrders(LinkedList<Order> orders) {
 		this.orders = orders;
 	}
@@ -46,10 +55,7 @@ public class Table implements TableInterface{
 	}*/
 	
 	public void deleteOrder(Order order) {
-		for(int i = 0; i < orders.size(); i++) {
-			if(orders.get(i) == order)
-				orders.remove(i);
-		}
+		orders.remove(order);
 	}
 	
 	public void addCustomer(Customer customer) {
@@ -65,10 +71,7 @@ public class Table implements TableInterface{
 	}*/
 	
 	public void deleteCustomer(Customer customer) {
-		for(int i = 0; i < orders.size(); i++) {
-			if(customers.get(i) == customer)
-				customers.remove(i);
-		}
+		customers.remove(customer);
 	}
 	
 	public int goDutch(Customer customer) {
@@ -77,6 +80,7 @@ public class Table implements TableInterface{
 		for(int i = 0; i < orders.size(); i++) {
 			if(orders.get(i).getCustomerID() == customer.getUserID()) {
 				sum += (orders.get(i).getProduct().getPrice() * orders.get(i).getProductQuantity());
+				customer.setDiscountCoupons(customer.getDiscountCoupons() + 1);
 				orders.remove(i);
 			}
 		}
@@ -92,8 +96,10 @@ public class Table implements TableInterface{
 		return sum;
 	}
 	
-	public int useCupon(int price, int discountCupon) {
-		price -= discountCupon;
+	public int useCupon(int price, Customer customer) {
+		int discounter = customer.getDiscountCoupons()/4;
+		price -= (discounter*10);
+		customer.setDiscountCoupons(customer.getDiscountCoupons() - (discounter * 4) );
 		return price;
 	}
 	

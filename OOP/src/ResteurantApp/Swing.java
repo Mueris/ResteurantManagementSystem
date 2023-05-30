@@ -6,8 +6,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.LinkedList;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.border.Border;
 public class Swing {
 	private boolean customerLogin;
 	private boolean employeeLogin;
@@ -35,7 +41,7 @@ public class Swing {
 		return UserLogin;
 	}
 	//this class will be used to implement GUI to the project. menu parts will be done in this section
-	public void firstMenu() {
+	public void firstMenu(Table[] tables,LinkedList<Customer>customers) {
 		JFrame frame = new JFrame();	
 		JButton signButton = new JButton("Sign-in");
 		JButton LoginButton = new JButton("Log-in");
@@ -46,7 +52,8 @@ public class Swing {
 		        public void actionPerformed(ActionEvent e) {
 		        	frame.dispose();
 					frame.setVisible(false);
-		        	SignIn();    
+		        	SignIn(tables,customers); 
+		        	test t= new test();
 
 		        }
 		    });
@@ -55,7 +62,7 @@ public class Swing {
 	        	frame.dispose();
 				frame.setVisible(false);
 				Login log = new Login();
-	        	log.login();    
+	        	log.login(tables,customers);    
 
 	        }
 	    });
@@ -99,7 +106,7 @@ public class Swing {
 	}
 
 
-	public void SignIn() {//Sign operation
+	public void SignIn(Table[] tables,LinkedList<Customer> customers) {//Sign operation
 		JFrame signFrame=new JFrame();
 		//Initialize Labels
 		JLabel nameLabel= new JLabel("Please Enter Your First Name");
@@ -143,13 +150,18 @@ public class Swing {
 		//action lister for buttons
 		okayButton.addActionListener(new ActionListener() {
 	        public void actionPerformed(ActionEvent e) {
-	        	if(typeField.getText().equals("Customer")) {
-	        		//call addUser for customer
+	        	if(typeField.getText().equalsIgnoreCase("customer")) {
+	        		test t = new test();
+	        		Customer cus = new Customer(nameField.getText(),lastNameField.getText(),Integer.valueOf(phoneNumberField.getText()),
+	        				mailField.getText(),typeField.getText(),0,t.IDCalculator(customers.size(), "customer"));
+	        		customers.add(cus);
 	        		JLabel end = new JLabel("Succesfully Signed In you can go back to menu!");
 	        		end.setBounds(600,600,250,40);
 	        		signFrame.add(end);
+	        		signFrame.dispose();
+	        		signFrame.setVisible(false);
 	        	}
-	        	else if(typeField.getText().equals("Employee")) {
+	        	else if(typeField.getText().equalsIgnoreCase("employee")) {
 	        		//call addUser for Employee
 	        		JLabel end = new JLabel("Succesfully Signed In you can go back to menu!");
 	        		end.setBounds(600,600,250,40);
@@ -161,7 +173,7 @@ public class Swing {
 	        		end.setBounds(600,600,250,40);
 	        		signFrame.add(end);
 	        	}
-	        	SignIn();
+	        	SignIn(tables,customers);
 
 	        }
 	    });
@@ -172,7 +184,7 @@ public class Swing {
 	        public void actionPerformed(ActionEvent e) {
 	        	signFrame.dispose();
 	        	signFrame.setVisible(false);
-	        	firstMenu();    
+	        	firstMenu(tables,customers);    
 
 	        }
 	    });
@@ -196,7 +208,7 @@ public class Swing {
 		signFrame.add(exitButton);	
 	}
 	
-	public void employeeScreen() {//provides a special view for employee
+	public void employeeScreen(Table[] tablex,LinkedList<Customer>customers) {//provides a special view for employee
 		if(isEmployeeLogin()) {
 			
 			JFrame employeeScreenFrame = new JFrame();
@@ -229,7 +241,14 @@ public class Swing {
 				
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					// TODO Auto-generated method stub
+					tableScreen tb= new tableScreen();
+					try {
+						tb.tableScreenView(tablex, customers, 3);
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					employeeScreenFrame.dispose();
 					
 				}
 			});
@@ -239,7 +258,7 @@ public class Swing {
 				public void actionPerformed(ActionEvent e) {
 					setEmployeeLogin(false);
 					employeeScreenFrame.dispose();
-					firstMenu();//return first menu, log out
+					firstMenu(tablex,customers);//return first menu, log out
 					
 				}
 			});
@@ -268,7 +287,7 @@ public class Swing {
 		}
 			
 	}
-	public void adminScreen() {//provides a special view for admin
+	public void adminScreen(Table[] tables,LinkedList<Customer> customers) {//provides a special view for admin
 		if(isAdminLogin()) {
 			JFrame adminScreenFrame = new JFrame();
 			JLabel welcomeLbl = new JLabel("Welcome admin Please Choose your Operation");
@@ -308,7 +327,7 @@ public class Swing {
 				public void actionPerformed(ActionEvent e) {
 					setAdminLogin(false);
 					adminScreenFrame.dispose();
-					firstMenu();//return first menu, log out
+					firstMenu(tables,customers);//return first menu, log out
 					
 				}
 			});

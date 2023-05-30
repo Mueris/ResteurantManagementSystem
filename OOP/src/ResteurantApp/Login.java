@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.LinkedList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -21,7 +22,7 @@ public class Login {
 	Swing s = new Swing();
 	
 	
-	public void login() {
+	public void login(Table[] tables,LinkedList<Customer>customers) {
 		/**This function will be assign as the first login page
 		 * which will be shown by every user. If the user is a employee or admin
 		 * An additional login password screen will be assigned.
@@ -104,21 +105,25 @@ public class Login {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String UserID =IDField.getText();//Gets the ID Entered
-				String costumerIDField="1234";//The prefix value of customer ID's
+				String costumerIDField="5000";//The prefix value of customer ID's
 				String employeeIDField="9876";//The prefix value of employee ID's
 				String adminIDField="1212";//The prefix value of admin ID's
 				if(UserID.substring(0,4).equals(costumerIDField)) {//determines the id is belong to a costumer or not
+					//bu id mevcut mu kontrolü eklenecek
+					
+					loginframe.dispose();
+					
 					
 				}
 				else if(UserID.substring(0,4).equals(employeeIDField)) {//determines the id is belong to a employee or not
 					loginframe.dispose();
 					loginframe.setVisible(false);
-					passwordLogin(UserID);//call employee login page
+					passwordLogin(tables,UserID,customers);//call employee login page
 				}
 				else if(UserID.substring(0,4).equals(adminIDField)) {//determines the id is belong to a admin or not
 					loginframe.dispose();
 					loginframe.setVisible(false);
-					passwordLogin(UserID);
+					passwordLogin(tables,UserID,customers);
 				}
 				else {//ID is not valid TRY again
 					
@@ -132,7 +137,7 @@ public class Login {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				s.firstMenu(); 
+				s.firstMenu(tables,customers); 
 				loginframe.setVisible(false);
 				loginframe.dispose();
 				
@@ -142,7 +147,7 @@ public class Login {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				s.SignIn();
+				s.SignIn(tables,customers);
 				loginframe.setVisible(false);
 				loginframe.dispose();
 				
@@ -159,7 +164,7 @@ public class Login {
 		
 		
 	}
-	public void passwordLogin(String id) {
+	public void passwordLogin(Table[] tables,String id,LinkedList<Customer>customers) {
 		String employeeID="9876";//default employee ID prefix
 		String adminID="1212";//default admin ID prefix
 		JFrame loginframe=new JFrame();
@@ -210,12 +215,12 @@ public class Login {
 					pasField.setBackground(Color.GREEN);
 					if(id.substring(0,4).equals(employeeID)) {//if password is right and id is employeeID
 						s.setEmployeeLogin(true);
-						s.employeeScreen();
+						s.employeeScreen(tables,customers);
 						loginframe.dispose();
 					}
 					else if(id.substring(0,4).equals(adminID)) {//if password is right and id is adminID
 						s.setAdminLogin(true);
-						s.adminScreen();
+						s.adminScreen(tables,customers);
 						loginframe.dispose();
 					}
 					
@@ -237,7 +242,7 @@ public class Login {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				s.firstMenu(); 
+				s.firstMenu(tables,customers); 
 				loginframe.dispose();
 				loginframe.setVisible(false);
 				
@@ -247,7 +252,7 @@ public class Login {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				login();
+				login(tables,customers);
 				loginframe.setVisible(false);
 				loginframe.dispose();
 				
@@ -257,7 +262,7 @@ public class Login {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				s.SignIn();
+				s.SignIn(tables,customers);
 				loginframe.dispose();
 				loginframe.setVisible(false);
 				
@@ -283,5 +288,7 @@ public class Login {
 		loginframe.add(IDField);
 		loginframe.add(pasField);
 		loginframe.add(goBackBtn);
+		
+		
 	}
 }
