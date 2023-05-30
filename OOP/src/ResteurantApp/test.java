@@ -5,27 +5,23 @@ import java.util.*;
 
 
 public class test {
+	
 	public static void main(String[] args) throws IOException {
 	int amountOfTable=15;//This value can be arrenged by resteurant
-	Table[] tables=new Table[amountOfTable];
-	LinkedList<Customer> customers = new LinkedList<Customer>();//DEVELOPER: Another Data Type can be used for the users array bcuz the number is unexpected such as arraylist, linkedlist.
-	//CircularQueue  orders = new CircularQueue();//DEVELOPER: is a priority queue better, bcuz all foods doesnt have the same preperation time?
+	Table[] tables=new Table[amountOfTable];//initiallize tables
+	LinkedList<Customer> customers = new LinkedList<Customer>();//linkedList for customers
 	
-	//Ä°nitializing databese ???
-	for(int i = 0; i < tables.length; i++) {
+	LinkedList<Employee> employees = new LinkedList<Employee>();//linkedList for employees
+	LinkedList<Product> menu = new LinkedList<Product>();//linkedList for menu
+
+	for(int i = 0; i < tables.length; i++) {//a for loop to detemine tables
 		tables[i] = new Table(new LinkedList<Order>(), i+1, true, new LinkedList<Customer>());
 	}
-	//setCustomers(customers, "customers.txt");
-	for(int i = 0; i < customers.size(); i++) {
-		System.out.println(customers.get(i).getUserID());
-	}
-	test t = new test();
-	
-	
+	setCustomers(customers, "customers.txt");//fileReaders
+	setEmployees(employees, "employees.txt");
+	setMenu(menu,"products.csv");
 	Swing a = new Swing();
-	//a.firstMenu(tables, customers);
-	tableScreen tb = new tableScreen();
-	tb.tableScreenView(tables, customers, 3);
+	a.firstMenu(tables, customers);//initiallize GUI
 	}
 	protected static void setCustomers(LinkedList<Customer> list, String file) {//a function to read file
 	//when the program is started program reads files and implements users.
@@ -67,6 +63,55 @@ public class test {
 			
 	}
 	
+	protected static void setAdmins(LinkedList<Admin> list, String file) {//a function to read file
+		//when the program is started program reads files and implements users.
+		//
+			Scanner sc = null;
+			try {
+				sc = new Scanner(new File(file));
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				System.out.print("There is no file");
+				System.exit(0);
+				e.printStackTrace();
+			}
+			sc.useDelimiter(",");
+			while(sc.hasNext()) {
+				list.add(new Admin(sc.next(), sc.next(), Integer.valueOf(sc.next()), sc.next(), sc.next(), Integer.valueOf(sc.next()),sc.next()));
+			}
+			sc.close();
+			
+	}
+	
+	protected static void setMenu(LinkedList<Product> list, String file) {//a function to read file
+		//when the program is started program reads files and implements users.
+		//
+			Scanner sc = null;
+			try {
+				sc = new Scanner(new File(file));
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				System.out.print("There is no file");
+				System.exit(0);
+				e.printStackTrace();
+			}
+			sc.useDelimiter(",");
+			while(sc.hasNext()) {
+				String category = sc.next();
+				String food = sc.next();
+				int specialID = Integer.valueOf(sc.next());
+				int price = Integer.valueOf(sc.next());
+				int stock = Integer.valueOf(sc.next());
+				boolean isAvailable = true;
+				if(sc.next().equals("false"))
+					isAvailable = false;
+				
+				list.add(new Product(category, food, specialID, price, stock, isAvailable));
+			}
+			sc.close();
+			
+	}
+	
 	protected void writeCustomers(LinkedList<Customer> list, String file) {//a function to write file
 	//in the exit, program overwrites the new data to the file.
 		try {
@@ -89,8 +134,24 @@ public class test {
 			      FileWriter fwrite = new FileWriter(file);
 			      for(int i = 0; i < list.size();i ++) {
 				      fwrite.write(list.get(i).getName() + "," + list.get(i).getSurname() + "," + list.get(i).getPhoneNumber() + ","
-				    		  + list.get(i).getEmail() + "," + list.get(i).getType() + "," + list.get(i).getEmployeePosition()
+				    		  + list.get(i).getEmail() + "," + list.get(i).getType() + "," + list.get(i).getEmployeePrice()
 				    		  + "," + list.get(i).getEmployeePosition() + "," + list.get(i).getEmployeeID() + "," + list.get(i).getPassword() + "\n");
+			      }
+			      fwrite.close();
+			      System.out.println("Successfully wrote to the file.");
+			    } catch (IOException e) {
+			      System.out.println("An error occurred.");
+			      e.printStackTrace();
+			    }
+		}
+	
+	protected void writeAdmins(LinkedList<Admin> list, String file) {//a function to write file
+		//in the exit, program overwrites the new data to the file.
+			try {
+			      FileWriter fwrite = new FileWriter(file);
+			      for(int i = 0; i < list.size();i ++) {
+				      fwrite.write(list.get(i).getName() + "," + list.get(i).getSurname() + "," + list.get(i).getPhoneNumber() + ","
+				    		  + list.get(i).getEmail() + "," + list.get(i).getType() + "," + list.get(i).getAdminID() + "," + list.get(i).getPassword() + "\n");
 			      }
 			      fwrite.close();
 			      System.out.println("Successfully wrote to the file.");
@@ -122,7 +183,7 @@ public class test {
 	}
 	
 	public void deleteCustomer(LinkedList<Customer> customers, int userID) {
-		/**@interface EditDialogField
+		/**
 		 * This function deletes the given User. Whether it is employee or user.
 		 * determines its type by ID and operates the given operataion in related part.
 		 * Attention to delete a User there must be employee authorization, to delete
@@ -135,16 +196,30 @@ public class test {
 		
 	}
 	
-	public void deleteEmployee(LinkedList<Employee> customers, int userID) {
-		/**@interface EditDialogField
+	public void deleteEmployee(LinkedList<Employee> employees, int userID) {
+		/**
 		 * This function deletes the given User. Whether it is employee or user.
 		 * determines its type by ID and operates the given operataion in related part.
 		 * Attention to delete a User there must be employee authorization, to delete
 		 * a employee there must be a admin authorization
 		 */
-		for(int i = 0; i < customers.size(); i++) {
-			if(customers.get(i).getEmployeeID() == userID)
-				customers.remove(i);
+		for(int i = 0; i < employees.size(); i++) {
+			if(employees.get(i).getEmployeeID() == userID)
+				employees.remove(i);
+		}
+		
+	}
+	
+	public void deleteAdmin(LinkedList<Admin> admins, int userID) {
+		/**
+		 * This function deletes the given User. Whether it is employee or user.
+		 * determines its type by ID and operates the given operataion in related part.
+		 * Attention to delete a User there must be employee authorization, to delete
+		 * a employee there must be a admin authorization
+		 */
+		for(int i = 0; i < admins.size(); i++) {
+			if(admins.get(i).getAdminID() == userID)
+				admins.remove(i);
 		}
 		
 	}
@@ -167,7 +242,14 @@ public class test {
 		}
 		return false;
 	}
-	
+	public  Product searchProduct(String productName, LinkedList<Product> menu) {
+        for(int i = 0; i < menu.size(); i++) {
+            if(menu.get(i).getFood().equals(productName))
+                return menu.get(i);
+        }
+
+        return null;
+    }
 	/*public boolean validateAdmin(LinkedList<Admin> admin, int id, String password) {
 		for(int i = 0; i < admin.size(); i++) {
 			if(admin.get(i) == id) {

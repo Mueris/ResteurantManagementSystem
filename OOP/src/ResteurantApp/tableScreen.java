@@ -1,8 +1,11 @@
 package ResteurantApp;
 
+import java.awt.Checkbox;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -12,8 +15,10 @@ import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
@@ -30,6 +35,57 @@ public class tableScreen {
 	private boolean user3Choosen=false;
 	private boolean user4Choosen=false;
 	private boolean tableChoosen=false;
+	private LinkedList<Order> orders= new LinkedList<Order>();
+	private LinkedList<Order> user1Orders= new LinkedList<Order>();
+	private LinkedList<Order> user2Orders= new LinkedList<Order>();
+	private LinkedList<Order> user3Orders= new LinkedList<Order>();
+	private LinkedList<Order> user4Orders= new LinkedList<Order>();
+	
+	JButton btn1 = new JButton("Login");
+	JButton btn2 = new JButton("Login");
+	JButton btn3 = new JButton("Login");
+	JButton btn4 = new JButton("Login");
+	
+	JButton addOrder1 = new JButton("ORDER");
+	JButton addOrder2 = new JButton("ORDER");
+	JButton addOrder3 = new JButton("ORDER");
+	JButton addOrder4 = new JButton("ORDER");
+	
+	JButton payOrder1 = new JButton("Pay1");
+	JButton payOrder2 = new JButton("Pay2");
+	JButton payOrder3 = new JButton("Pay3");
+	JButton payOrder4 = new JButton("Pay4");
+	JButton payOrderTable = new JButton("PAY TABLE");
+	
+	public void setButtonVisible(JButton btn) {
+		btn1.setVisible(false);
+		btn2.setVisible(false);
+		btn3.setVisible(false);
+		btn4.setVisible(false);
+		
+		addOrder1.setVisible(false);
+		addOrder2.setVisible(false);
+		addOrder3.setVisible(false);
+		addOrder4.setVisible(false);
+		
+		payOrder1.setVisible(false);
+		payOrder2.setVisible(false);
+		payOrder3.setVisible(false);
+		payOrder4.setVisible(false);
+		
+		payOrderTable.setVisible(false);
+		
+		btn.setVisible(true);
+		if(btn==addOrder1)
+			payOrder1.setVisible(true);
+		if(btn==addOrder2)
+			payOrder2.setVisible(true);
+		if(btn==addOrder3)
+			payOrder3.setVisible(true);
+		if(btn==addOrder4)
+			payOrder4.setVisible(true);
+	}
+	
 	
 
 	
@@ -109,6 +165,42 @@ public class tableScreen {
 		this.tableChoosen = tableChoosen;
 	}
 	
+	public LinkedList<Order> getOrders() {
+		return orders;
+	}
+
+	public void setOrders(LinkedList<Order> orders) {
+		this.orders = orders;
+	}
+	public LinkedList<Order> getuser1Orders() {
+		return user1Orders;
+	}
+
+	public void setuser1Orders(LinkedList<Order> user1Orders) {
+		this.user1Orders = user1Orders;
+	}
+	public LinkedList<Order> getuser2Orders() {
+		return user2Orders;
+	}
+
+	public void setuser2Orders(LinkedList<Order> user2Orders) {
+		this.user2Orders = user2Orders;
+	}
+	public LinkedList<Order> getuser3Orders() {
+		return user3Orders;
+	}
+
+	public void setuser3Orders(LinkedList<Order> user3Orders) {
+		this.user3Orders = user3Orders;
+	}
+	public LinkedList<Order> getuser4Orders() {
+		return user4Orders;
+	}
+
+	public void setuser4Orders(LinkedList<Order> user4Orders) {
+		this.user4Orders = user4Orders;
+	}
+	
 	public void setChoosen1True(){
 		this.user1Choosen=true;
 		this.user2Choosen=false;
@@ -151,10 +243,10 @@ public class tableScreen {
 	}
 	
 	
-	public void tableScreenView(Table[] tables, LinkedList<Customer>customers ,int tableID) throws IOException {
+	public void tableScreenView(Table[] tables, LinkedList<Customer>customers,int tableID) throws IOException {
+		JFrame tableScreen = new JFrame();
 		
-		
-		LinkedList orders = tables[tableID].getOrders();
+		/**LinkedList orders = tables[tableID].getOrders();
 		String[] customer=new String[orders.size()];
 		Product[] product=new Product[orders.size()];
 		String[] productName=new String[orders.size()];
@@ -182,6 +274,7 @@ public class tableScreen {
 		rowData[4]=orderID;
 		
 		
+		
 		DefaultTableModel tableModel = new DefaultTableModel(rowData,categories);
 		JTable list = new JTable(tableModel);
 		list.setVisible(true);
@@ -189,17 +282,93 @@ public class tableScreen {
 		list.setBackground(null);
 		//list.setRowSelectionAllowed(tableChoosen);ROW SEÇİMİ YAPILIYOR
 		
+		this.orders =tables[tableID].getOrders();//Separates the Customer orders and assigns to them
+		for (int i = 0; i < orders.size(); i++) {
+			if(User1.getUserID()==((Order)orders.get(i)).getCustomerID()) {
+				user1Orders.add((Order) orders.get(i));
+			}
+			else if(User2.getUserID()==((Order)orders.get(i)).getCustomerID()) {
+				user2Orders.add((Order) orders.get(i));
+			}
+			else if(User3.getUserID()==((Order)orders.get(i)).getCustomerID()) {
+				user2Orders.add((Order) orders.get(i));
+			}
+			else if(User4.getUserID()==((Order)orders.get(i)).getCustomerID()) {
+				user2Orders.add((Order) orders.get(i));
+			}
+		}**/
+		
+		
+		LinkedList<Product> menu=new LinkedList<Product>();
+		test.setMenu(menu,"products.csv");
+		Object[][] rows = new Object[menu.size()][3];
+		
+		
+		String[] price = new String[menu.size()];
+		String[] foodName = new String[menu.size()];
+		String[] Category = new String[menu.size()];
+		
+		String[] categories = {"Category", "Food Name","Price"};//price icin quantitiy times foodPrice hesaplanabilir
 		
 		
 		
-		JFrame tableScreen= new JFrame();
-		BufferedImage buttonIcon = ImageIO.read(new File("C:\\Users\\musta\\eclipse-workspace\\OOP\\src\\user1.png"));
-		BufferedImage tableIcon = ImageIO.read(new File("C:\\Users\\musta\\eclipse-workspace\\OOP\\src\\table2.png"));
+		
+		
+		
+		for (int i = 0; i < menu.size(); i++) {
+			price[i]=String.valueOf("₺"+menu.get(i).getPrice());
+			foodName[i]=menu.get(i).getFood();
+			Category[i]=menu.get(i).getCategory();
+		}
+		for (int i = 0; i < menu.size(); i++) {
+			rows[i][0]=Category[i];
+			rows[i][1]=foodName[i];
+			rows[i][2]=price[i];
+			
+		}
+		
+		
+		
+		DefaultTableModel tableModel = new DefaultTableModel(rows,categories);
+		JTable list = new JTable(tableModel);
+		list.setVisible(true);
+		list.setSize(400,300);
+		list.setBounds(350, 50,400, 300);
+		list.setBackground(null);
+		list.setRowSelectionAllowed(true);
+		JScrollPane sp = new JScrollPane(list);
+		list.setBorder(BorderFactory.createMatteBorder(01, 01, 01, 01,Color.BLUE));
+		
+		
+		
+		BufferedImage buttonIcon = ImageIO.read(new File("user1.png"));
+		BufferedImage tableIcon = ImageIO.read(new File("table2.png"));
 		JButton user1btn= new JButton(new ImageIcon(buttonIcon));
 		JButton user2btn= new JButton(new ImageIcon(buttonIcon));
 		JButton user3btn= new JButton(new ImageIcon(buttonIcon));
 		JButton user4btn= new JButton(new ImageIcon(buttonIcon));
 		JButton table = new JButton(new ImageIcon(tableIcon));
+		JButton empMenu = new JButton("Menu");
+		
+		
+		JButton closeTable=new JButton("CLOSE");
+		closeTable.setBounds(400, 650, 75, 40);
+		
+		JButton exit = new JButton("exit");
+		exit.setBounds(400, 600, 75, 40);
+		empMenu.setBounds(500, 650, 75, 40);
+		
+		JLabel total=new JLabel("Total Value;");
+		JLabel discounted = new JLabel("Discounted Paid Value:");
+		JLabel success = new JLabel("Thank you for your payment");
+			
+		total.setBounds(500,500,250,40);
+		discounted.setBounds(500,550,250,40);
+		success.setBounds(500,600,250,40);
+		
+		total.setVisible(false);
+		discounted.setVisible(false);
+		success.setVisible(false);
 		
 		JLabel User1Name= new JLabel();
 		JLabel User2Name= new JLabel();
@@ -209,24 +378,47 @@ public class tableScreen {
 		
 		JLabel message = new JLabel();
 		JTextField IDinput = new JTextField();
-		JButton btn1 = new JButton("Login");
-		JButton btn2 = new JButton("Login");
-		JButton btn3 = new JButton("Login");
-		JButton btn4 = new JButton("Login");
+		
 		
 		IDinput.setVisible(false);
 		btn1.setVisible(false);
 		btn2.setVisible(false);
 		btn3.setVisible(false);
 		btn4.setVisible(false);
-		message.setVisible(false);
 		
+		
+		message.setVisible(false);
 		IDinput.setBounds(50,450,250,40);
-		btn1.setBounds(50,500,75,40);
-		btn2.setBounds(50,500,75,40);
-		btn3.setBounds(50,500,75,40);
-		btn4.setBounds(50,500,75,40);
+		btn1.setBounds(100,500,75,40);
+		btn2.setBounds(100,500,75,40);
+		btn3.setBounds(100,500,75,40);
+		btn4.setBounds(100,500,75,40);
+		addOrder1.setBounds(50,500,75,40);
+		addOrder2.setBounds(50,500,75,40);
+		addOrder3.setBounds(50,500,75,40);
+		addOrder4.setBounds(50,500,75,40);
+		payOrder1.setBounds(125,500,75,40);
+		payOrder2.setBounds(125,500,75,40);
+		payOrder3.setBounds(125,500,75,40);
+		payOrder4.setBounds(125,500,75,40);
+		payOrderTable.setBounds(125,500,100,50);
 		message.setBounds(50,400,250,40);
+		
+		
+		
+		addOrder1.setVisible(false);
+		addOrder2.setVisible(false);
+		addOrder3.setVisible(false);
+		addOrder4.setVisible(false);
+		payOrder1.setVisible(false);
+		payOrder2.setVisible(false);
+		payOrder3.setVisible(false);
+		payOrder4.setVisible(false);
+		
+		addOrder4.setEnabled(false);
+		addOrder3.setEnabled(false);
+		addOrder2.setEnabled(false);
+		addOrder1.setEnabled(false);
 		
 		table.setBounds(125,125,100,100);
 		table.setBorder(BorderFactory.createEmptyBorder());
@@ -253,6 +445,168 @@ public class tableScreen {
 		User4Name.setBounds(305,150,100,40);
 		
 		
+		if(tables[tableID].getCustomers().size()>=1) {
+			User1=tables[tableID].getCustomers().get(0);
+			User1Name.setText(User1.getName());
+			User1Name.setVisible(true);
+		}
+		 if(tables[tableID].getCustomers().size()>=2) {
+			User2=tables[tableID].getCustomers().get(1);
+			User2Name.setText(User2.getName());
+			User2Name.setVisible(true);
+		}
+		 if(tables[tableID].getCustomers().size()>=3) {
+			User3=tables[tableID].getCustomers().get(2);
+			User3Name.setText(User3.getName());
+			User3Name.setVisible(true);
+		}
+		 if(tables[tableID].getCustomers().size()>=4) {
+			User4=tables[tableID].getCustomers().get(4);
+			User4Name.setText(User4.getName());
+			User4Name.setVisible(true);
+		}
+		
+		closeTable.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				tables[tableID].getCustomers().removeAll(tables[tableID].getCustomers());
+				Swing a = new Swing();
+				a.allTables(tables, customers);
+				tableScreen.dispose();
+				
+			}
+		});
+		
+		addOrder4.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				
+				int row =list.getSelectedRow();
+				String name = (String) list.getModel().getValueAt(row,1);
+				test t = new test();
+				Product pr =t.searchProduct(name, menu);
+				tables[tableID].getOrders().add(new Order(pr,User4.getUserID(),1,tableID));
+				User4.setDiscountCoupons(User4.getDiscountCoupons()+1);
+			
+				
+			}
+		});
+		
+		payOrder4.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				total.setVisible(true);
+				discounted.setVisible(true);
+				int totaly =tables[tableID].goDutch(User4);
+				int discountedy = tables[tableID].useCupon(totaly, User4);
+				discounted.setText("Discounted paid Value : "+discountedy);
+				total.setText("Total Value without discount : "+totaly);
+				success.setVisible(true);
+				
+				
+				
+				
+			}
+		});
+		
+		addOrder1.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int row =list.getSelectedRow();
+				String name = (String) list.getModel().getValueAt(row,1);
+				test t = new test();
+				Product pr =t.searchProduct(name, menu);
+				tables[tableID].getOrders().add(new Order(pr,User1.getUserID(),1,tableID));	
+				User1.setDiscountCoupons(User1.getDiscountCoupons()+1);
+			}
+		});
+		payOrder1.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				total.setVisible(true);
+				discounted.setVisible(true);
+				int totaly =tables[tableID].goDutch(User1);
+				int discountedy = tables[tableID].useCupon(totaly, User1);
+				discounted.setText("Discounted paid Value : "+discountedy);
+				total.setText("Total Value without discount : "+totaly);
+				success.setVisible(true);
+				
+			}
+		});
+		
+		addOrder2.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int row =list.getSelectedRow();
+				String name = (String) list.getModel().getValueAt(row,1);
+				test t = new test();
+				Product pr =t.searchProduct(name, menu);
+				tables[tableID].getOrders().add(new Order(pr,User2.getUserID(),1,tableID));		
+				User2.setDiscountCoupons(User2.getDiscountCoupons()+1);
+			}
+		});
+		payOrder2.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				total.setVisible(true);
+				discounted.setVisible(true);
+				int totaly =tables[tableID].goDutch(User2);
+				int discountedy = tables[tableID].useCupon(totaly, User2);
+				discounted.setText("Discounted paid Value : "+discountedy);
+				total.setText("Total Value without discount : "+totaly);
+				success.setVisible(true);
+				
+			}
+		});
+		
+		addOrder3.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int row =list.getSelectedRow();
+				String name = (String) list.getModel().getValueAt(row,1);
+				test t = new test();
+				Product pr =t.searchProduct(name, menu);
+				tables[tableID].getOrders().add(new Order(pr,User3.getUserID(),1,tableID));	
+				User3.setDiscountCoupons(User3.getDiscountCoupons()+1);
+			}
+		});
+		payOrder3.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				total.setVisible(true);
+				discounted.setVisible(true);
+				int totaly =tables[tableID].goDutch(User3);
+				int discountedy = tables[tableID].useCupon(totaly, User3);
+				discounted.setText("Discounted paid Value : "+discountedy);
+				total.setText("Total Value without discount : "+totaly);
+				success.setVisible(true);
+				
+			}
+		});
+		payOrderTable.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				total.setVisible(true);
+				discounted.setVisible(false);
+				int totaly =tables[tableID].payOrders();
+				total.setText("Total Value without discount : "+totaly);
+				success.setVisible(true);
+				
+			}
+		});
+		
+		
 		table.addActionListener(new ActionListener() {
 			
 			@Override
@@ -263,12 +617,19 @@ public class tableScreen {
 				user3btn.setBorder(BorderFactory.createEmptyBorder());
 				user4btn.setBorder(BorderFactory.createEmptyBorder());
 				IDinput.setVisible(false);
+				message.setVisible(false);
+				IDinput.setVisible(false);
 				btn1.setVisible(false);
 				btn2.setVisible(false);
 				btn3.setVisible(false);
 				btn4.setVisible(false);
-				message.setVisible(false);
+				payOrderTable.setVisible(true);
 				setTableTrue();
+				discounted.setVisible(false);
+				total.setVisible(false);
+				success.setVisible(false);
+				setButtonVisible(payOrderTable);
+				
 				
 			}
 		});
@@ -277,18 +638,20 @@ public class tableScreen {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				setEnable(btn1);
 				user1btn.setBorder(BorderFactory.createMatteBorder(10, 10, 10, 10, Color.GREEN));//paints the choosen user's border 
 				user2btn.setBorder(BorderFactory.createEmptyBorder());//if other users selected before they will return to default
 				user3btn.setBorder(BorderFactory.createEmptyBorder());
 				user4btn.setBorder(BorderFactory.createEmptyBorder());
 				table.setBorder(BorderFactory.createEmptyBorder());
 				IDinput.setBackground(Color.WHITE);
-				btn2.setVisible(false);
-				btn3.setVisible(false);
-				btn4.setVisible(false);
-				setChoosen1True();
 				
+				setChoosen1True();
+				discounted.setVisible(false);
+				total.setVisible(false);
+				success.setVisible(false);
 				if(getUser1()==null) {
+					setButtonVisible(btn1);
 					message.setText("Please Enter the ID of User1: ");
 					message.setVisible(true);
 					IDinput.setVisible(true);
@@ -301,12 +664,17 @@ public class tableScreen {
 							for(int i = 0; i < customers.size(); i++) {
 								if(customers.get(i).getUserID() == Integer.valueOf(id)) {
 									setUser1(customers.get(i));
+									tables[tableID].getCustomers().add(User1);
 									User1Name.setText(User1.getName());
+									user1btn.setBorder(BorderFactory.createEmptyBorder());
+									btn1.setVisible(false);
+									IDinput.setVisible(false);
+									message.setText("Successfully Loged in!");
 									break;
 								}
 									
 							}
-							if(User1==null) {
+							if(User1==null) {//ID not found exception
 								IDinput.setBackground(Color.RED);
 							}
 							
@@ -314,7 +682,15 @@ public class tableScreen {
 						}
 					});
 				}
-				else {//BIRI ZATEN OTURUYOR ILGILI ISLEMLER
+				
+				else {
+					setEnable(addOrder1);
+					IDinput.setVisible(false);
+					setButtonVisible(addOrder1);
+					message.setText("Please Give an Order or Pay");
+					
+					addOrder1.getAction();
+					payOrder1.getAction();
 					
 				}
 				
@@ -325,18 +701,20 @@ public class tableScreen {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				setEnable(btn2);
 				user2btn.setBorder(BorderFactory.createMatteBorder(10, 10, 10, 10, Color.GREEN));//paints the choosen user's border 
 				user1btn.setBorder(BorderFactory.createEmptyBorder());//if other users selected before they will return to default
 				user3btn.setBorder(BorderFactory.createEmptyBorder());
 				user4btn.setBorder(BorderFactory.createEmptyBorder());
 				table.setBorder(BorderFactory.createEmptyBorder());
 				IDinput.setBackground(Color.WHITE);
-				btn1.setVisible(false);
-				btn3.setVisible(false);
-				btn4.setVisible(false);
-				setChoosen2True();
 				
-				if(getUser2()==null) {
+				setChoosen2True();
+				discounted.setVisible(false);
+				total.setVisible(false);
+				success.setVisible(false);
+				if(getUser2()==null ) {
+					setButtonVisible(btn2);
 					message.setText("Please Enter the ID of User2: ");
 					message.setVisible(true);
 					IDinput.setVisible(true);
@@ -349,12 +727,17 @@ public class tableScreen {
 							for(int i = 0; i < customers.size(); i++) {
 								if(customers.get(i).getUserID() == Integer.valueOf(id)) {
 									setUser2(customers.get(i));
+									tables[tableID].getCustomers().add(User2);
 									User2Name.setText(User2.getName());
+									user2btn.setBorder(BorderFactory.createEmptyBorder());
+									btn2.setVisible(false);
+									IDinput.setVisible(false);
+									message.setText("Successfully Loged in!");
 									break;
 								}
 									
 							}
-							if(User2==null) {
+							if(User2==null) {//ID not found exception
 								IDinput.setBackground(Color.RED);
 							}
 							
@@ -362,7 +745,17 @@ public class tableScreen {
 						}
 					});
 				}
-				else {//BIRI ZATEN OTURUYOR ILGILI ISLEMLER
+				
+				else {
+					
+					
+					setEnable(addOrder2);
+					IDinput.setVisible(false);
+					setButtonVisible(addOrder2);
+					message.setText("Please Give an Order or Pay");
+					
+					addOrder2.getAction();
+					payOrder2.getAction();
 					
 				}
 				
@@ -372,18 +765,20 @@ public class tableScreen {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				setEnable(btn3);
 				user3btn.setBorder(BorderFactory.createMatteBorder(10, 10, 10, 10, Color.GREEN));//paints the choosen user's border 
 				user1btn.setBorder(BorderFactory.createEmptyBorder());//if other users selected before they will return to default
 				user2btn.setBorder(BorderFactory.createEmptyBorder());
 				user4btn.setBorder(BorderFactory.createEmptyBorder());
 				table.setBorder(BorderFactory.createEmptyBorder());
 				IDinput.setBackground(Color.WHITE);
-				btn2.setVisible(false);
-				btn1.setVisible(false);
-				btn4.setVisible(false);
-				setChoosen3True();
 				
+				setChoosen3True();
+				discounted.setVisible(false);
+				total.setVisible(false);
+				success.setVisible(false);
 				if(getUser3()==null) {
+					setButtonVisible(btn3);
 					message.setText("Please Enter the ID of User3: ");
 					message.setVisible(true);
 					IDinput.setVisible(true);
@@ -395,13 +790,19 @@ public class tableScreen {
 							String id= IDinput.getText();
 							for(int i = 0; i < customers.size(); i++) {
 								if(customers.get(i).getUserID() == Integer.valueOf(id)) {
+									
 									setUser3(customers.get(i));
+									tables[tableID].getCustomers().add(User3);
 									User3Name.setText(User3.getName());
+									user3btn.setBorder(BorderFactory.createEmptyBorder());
+									btn3.setVisible(false);
+									IDinput.setVisible(false);
+									message.setText("Successfully Loged in!");
 									break;
 								}
 									
 							}
-							if(User3==null) {
+							if(User3==null) {//ID not found exception
 								IDinput.setBackground(Color.RED);
 							}
 							
@@ -409,7 +810,16 @@ public class tableScreen {
 						}
 					});
 				}
-				else {//BIRI ZATEN OTURUYOR ILGILI ISLEMLER
+				else {
+					
+					
+					setEnable(addOrder3);
+					IDinput.setVisible(false);
+					setButtonVisible(addOrder3);
+					message.setText("Please Give an Order or Pay");
+					
+					addOrder3.getAction();
+					payOrder3.getAction();
 					
 				}
 				
@@ -419,17 +829,19 @@ public class tableScreen {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				setEnable(btn4);
 				user4btn.setBorder(BorderFactory.createMatteBorder(10, 10, 10, 10, Color.GREEN));//paints the choosen user's border 
 				user1btn.setBorder(BorderFactory.createEmptyBorder());//if other users selected before they will return to default
 				user3btn.setBorder(BorderFactory.createEmptyBorder());
 				user2btn.setBorder(BorderFactory.createEmptyBorder());
 				table.setBorder(BorderFactory.createEmptyBorder());
 				IDinput.setBackground(Color.WHITE);
-				btn2.setVisible(false);
-				btn3.setVisible(false);
-				btn1.setVisible(false);
 				setChoosen4True();
+				discounted.setVisible(false);
+				total.setVisible(false);
+				success.setVisible(false);
 				if(getUser4()==null) {
+					setButtonVisible(btn4);
 					message.setText("Please Enter the ID of User4: ");
 					message.setVisible(true);
 					IDinput.setVisible(true);
@@ -442,13 +854,17 @@ public class tableScreen {
 							for(int i = 0; i < customers.size(); i++) {
 								if(customers.get(i).getUserID() == Integer.valueOf(id)) {
 									setUser4(customers.get(i));
+									tables[tableID].getCustomers().add(User4);
 									User4Name.setText(User4.getName());
+									user4btn.setBorder(BorderFactory.createEmptyBorder());
+									btn4.setVisible(false);
+									IDinput.setVisible(false);
+									message.setText("Successfully Loged in!");
 									break;
-									
 								}
 									
 							}
-							if(User4==null) {
+							if(User4==null) {//ID not found exception
 								IDinput.setBackground(Color.RED);
 							}
 							
@@ -456,15 +872,47 @@ public class tableScreen {
 						}
 					});
 				}
-				
-				else {//BIRI ZATEN OTURUYOR ILGILI ISLEMLER
+				else {
+					
+					setEnable(addOrder4);
+					IDinput.setVisible(false);
+					setButtonVisible(addOrder4);
+					message.setText("Please Give an Order or Pay");
+					addOrder4.getAction();
+					payOrder4.getAction();
+					
+					
+					
+					
 					
 				}
 				
 				
+			
+			}
+		});
+		exit.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Swing a = new Swing();
+				a.allTables(tables, customers);
+				tableScreen.dispose();
+				
 			}
 		});
 		
+		empMenu.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Swing a = new Swing();
+				
+			
+				a.firstMenu(tables, customers);
+				tableScreen.dispose();
+			}
+		});
 		
 		
 		tableScreen.setSize(800,800);
@@ -488,8 +936,51 @@ public class tableScreen {
 		tableScreen.add(User4Name);
 		tableScreen.add(table);
 		tableScreen.add(list);
+		tableScreen.add(addOrder1);
+		tableScreen.add(addOrder2);
+		tableScreen.add(addOrder3);
+		tableScreen.add(addOrder4);
+		tableScreen.add(payOrder1);
+		tableScreen.add(payOrder2);
+		tableScreen.add(payOrder3);
+		tableScreen.add(payOrder4);
+		tableScreen.add(payOrderTable);
+		tableScreen.add(sp);
+		tableScreen.add(discounted);
+		tableScreen.add(total);
+		tableScreen.add(success);
+		tableScreen.add(exit);
+		tableScreen.add(closeTable);
+		tableScreen.add(empMenu);
+		
+		
 		
 	}
+	public void payOrder(Table[] tables,int tableID, User user,boolean isTable) {
+		//tables[tableID].
+	}
+	public void setEnable(JButton btn) {
+		payOrder4.setEnabled(false);
+		addOrder4.setEnabled(false);
+		payOrder3.setEnabled(false);
+		addOrder3.setEnabled(false);
+		payOrder2.setEnabled(false);
+		addOrder2.setEnabled(false);
+		payOrder1.setEnabled(false);
+		addOrder1.setEnabled(false);
+		btn.setEnabled(true);
+		if(btn==addOrder1)
+			payOrder1.setEnabled(true);
+		else if(btn==addOrder2)
+			payOrder2.setEnabled(true);
+		else if(btn==addOrder3)
+			payOrder3.setEnabled(true);
+		else if(btn==addOrder4)
+			payOrder4.setEnabled(true);
+	}
+	
+
+	
 
 	
 }

@@ -1,5 +1,6 @@
 package ResteurantApp;
 import java.awt.Color;
+import java.awt.Menu;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 	import java.awt.event.ActionListener;
@@ -14,6 +15,7 @@ import java.util.LinkedList;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.Border;
+import javax.swing.table.DefaultTableModel;
 public class Swing {
 	private boolean customerLogin;
 	private boolean employeeLogin;
@@ -41,6 +43,54 @@ public class Swing {
 		return UserLogin;
 	}
 	//this class will be used to implement GUI to the project. menu parts will be done in this section
+	public void allTables(Table[]tables,LinkedList<Customer> customers) {
+		
+		JFrame tableFrame=new JFrame();
+		JLabel title = new JLabel("");
+		
+		
+		JButton table;
+		
+		title.setBounds(300, 50, 150, 50);
+		for (int i = 0; i < tables.length; i++) {
+			table=new JButton("Table: "+(i+1));
+			int a =i+1;
+			if(i<=4)
+				table.setBounds(100+(110*i), 150, 200, 150);
+			else if(i<=9)
+				table.setBounds(100+(110*(i-5)), 300, 200, 80);
+			else
+				table.setBounds(100+(110*(i-10)), 450, 200, 80);
+			table.setSize(100,80);
+			table.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					tableScreen tb = new tableScreen();
+					
+					try {
+						
+						tb.tableScreenView(tables, customers,a);
+						tableFrame.dispose();
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					
+				}
+			});
+			
+			tableFrame.add(table);
+			tableFrame.add(title);
+			
+			
+		
+		}
+		tableFrame.setSize(800,800);
+		tableFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		tableFrame.setVisible(true);
+		tableFrame.getContentPane().setLayout(null);
+	}
 	public void firstMenu(Table[] tables,LinkedList<Customer>customers) {
 		JFrame frame = new JFrame();	
 		JButton signButton = new JButton("Sign-in");
@@ -213,7 +263,6 @@ public class Swing {
 			
 			JFrame employeeScreenFrame = new JFrame();
 			//necessary button initialization
-			JButton orders = new JButton("Orders");
 			JButton tables = new JButton("Tables");
 			JButton logOut = new JButton("Log Out");
 			JButton exit = new JButton("exit");
@@ -222,32 +271,20 @@ public class Swing {
 			
 			tables.setBackground(Color.GREEN);
 			//arranging the bounds
-			orders.setBounds(250,200,200,100);
-			tables.setBounds(250,300,200,100);
-			logOut.setBounds(250,400,200,100);
-			exit.setBounds(250,500,200,100);
+			tables.setBounds(250,250,200,100);
+			logOut.setBounds(250,350,200,100);
+			exit.setBounds(250,450,200,100);
 			
 			wellcomeText.setBounds(230,105,450,100);
 			//button operations
-			orders.addActionListener(new ActionListener() {//Order screen listener
-				
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					// TODO Auto-generated method stub
-					
-				}
-			});
+			
 			tables.addActionListener(new ActionListener() {//tables screen listener
 				
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					tableScreen tb= new tableScreen();
-					try {
-						tb.tableScreenView(tablex, customers, 3);
-					} catch (IOException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
+					Swing a = new Swing();
+					a.allTables(tablex, customers);
 					employeeScreenFrame.dispose();
 					
 				}
@@ -279,7 +316,6 @@ public class Swing {
 			employeeScreenFrame.getContentPane().setLayout(null);
 			
 			employeeScreenFrame.add(exit);
-			employeeScreenFrame.add(orders);
 			employeeScreenFrame.add(tables);
 			employeeScreenFrame.add(logOut);
 			employeeScreenFrame.add(wellcomeText);
@@ -288,36 +324,30 @@ public class Swing {
 			
 	}
 	public void adminScreen(Table[] tables,LinkedList<Customer> customers) {//provides a special view for admin
-		if(isAdminLogin()) {
+		
 			JFrame adminScreenFrame = new JFrame();
 			JLabel welcomeLbl = new JLabel("Welcome admin Please Choose your Operation");
 			//Button initialization
-			JButton financalBtn = new JButton("Financal");
+			
 			JButton employeesBtn = new JButton("Employees");
 			JButton logOutBtn = new JButton("LogOut");
 			JButton exitBtn = new JButton("Exit");
 			
 			welcomeLbl.setBounds(230,105,450,100);
 			//Bound operations
-			financalBtn.setBounds(250,200,200,100);
+		
 			employeesBtn.setBounds(250,300,200,100);
 			logOutBtn.setBounds(250,400,200,100);
 			exitBtn.setBounds(250,500,200,100);
 			//Button setters
-			financalBtn.addActionListener(new ActionListener() {//Shows financal variables when selected.
-				
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					// TODO Auto-generated method stub
-					
-				}
-			});
+			
 			
 			employeesBtn.addActionListener(new ActionListener() {//Shows employees when selected
 				
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					// TODO Auto-generated method stub
+					adminEmployeeScreen(tables, customers);
+					adminScreenFrame.dispose();
 					
 				}
 			});
@@ -347,15 +377,93 @@ public class Swing {
 			adminScreenFrame.setVisible(true);
 			adminScreenFrame.getContentPane().setLayout(null);
 			
-			adminScreenFrame.add(financalBtn);
+	
 			adminScreenFrame.add(employeesBtn);
 			adminScreenFrame.add(logOutBtn);
 			adminScreenFrame.add(exitBtn);
 			adminScreenFrame.add(welcomeLbl);
 			
 			
-		}
+		
 		
 	}
+	public void adminEmployeeScreen(Table[] tables,LinkedList<Customer>customers) {
+		
+		JFrame jf = new JFrame();
+		JLabel lb = new JLabel("Employees");
+		lb.setBounds(300,20,250,100);
+		lb.setSize(100,100);
+		JButton menu =new JButton("Menu");
+		JButton back=new JButton("back");
+		menu.setBounds(375,625,75,40);
+		back.setBounds(500,625,75,40);
+		menu.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				firstMenu(tables, customers);
+				jf.dispose();
+				
+			}
+		});
+		back.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				adminScreen(tables, customers);
+				jf.dispose();
+				
+			}
+		});
+		LinkedList<Employee> employees=new LinkedList<Employee>();
+		test t= new test();
+		t.setEmployees(employees, "employees.txt");
+		String[] name = new String[employees.size()];
+		String[] lastName = new String[employees.size()];
+		int[] phone = new int[employees.size()];
+		int[] price = new int[employees.size()];
+		Object[][] temp = new Object[employees.size()][4];
+		for (int i = 0; i < employees.size(); i++) {
+			price[i]= employees.get(i).getEmployeePrice();
+			lastName[i]=employees.get(i).getSurname();
+			name[i]=employees.get(i).getName();
+			phone[i]=employees.get(i).getPhoneNumber();
+			
+		}
+		String[] cat= {"Name","LastName","Phone","Salary"};
+		for (int i = 0; i < employees.size(); i++) {
+			temp[i][0]=name[i];
+			temp[i][1]=lastName[i];
+			temp[i][2]=phone[i];
+			temp[i][3]=price[i];
+
+		}
+		
+		DefaultTableModel tableModel = new DefaultTableModel(temp,cat);
+		JTable list = new JTable(tableModel);
+		list.setVisible(true);
+		list.setSize(500,500);
+		list.setBounds(100, 100,500, 500);
+		list.setBackground(null);
+		list.setRowSelectionAllowed(true);
+		JScrollPane sp = new JScrollPane(list);
+		list.setBorder(BorderFactory.createMatteBorder(01, 01, 01, 01,Color.BLUE));
+		
+		jf.setSize(800,800);
+		jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		jf.setVisible(true);
+		jf.getContentPane().setLayout(null);
+		
+		jf.add(sp);
+		jf.add(list);
+		jf.add(lb);
+		jf.add(back);
+		jf.add(menu);
+		
+		
+	}
+	
+	
+	
 	
 }

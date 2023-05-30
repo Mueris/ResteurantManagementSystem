@@ -8,6 +8,15 @@ public class Order {
 	private int ProductQuantity; 
 	private int TableNumber;
 	private boolean isDelivered;//determines whether the order is delivered or not by this employees can see what to prepare
+	
+	
+	public Order(Product product, int CustomerID, int productQuantity, int tableNumber) {
+        this.product = product;
+        this.CustomerID = CustomerID;
+        this.ProductQuantity = productQuantity;
+        this.TableNumber = tableNumber;
+    }
+	
 	public Product getProduct() {
 		return product;
 	}

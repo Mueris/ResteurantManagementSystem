@@ -105,17 +105,15 @@ public class Login {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String UserID =IDField.getText();//Gets the ID Entered
-				String costumerIDField="5000";//The prefix value of customer ID's
-				String employeeIDField="9876";//The prefix value of employee ID's
+				String costumerIDField="5";//The prefix value of customer ID's
+				String employeeIDField="2";//The prefix value of employee ID's
 				String adminIDField="1212";//The prefix value of admin ID's
-				if(UserID.substring(0,4).equals(costumerIDField)) {//determines the id is belong to a costumer or not
-					//bu id mevcut mu kontrolü eklenecek
-					
+				if(UserID.substring(0,1).equals(costumerIDField)) {//determines the id is belong to a costumer or not
+				
 					loginframe.dispose();
 					
-					
 				}
-				else if(UserID.substring(0,4).equals(employeeIDField)) {//determines the id is belong to a employee or not
+				else if(UserID.substring(0,1).equals(employeeIDField)) {//determines the id is belong to a employee or not
 					loginframe.dispose();
 					loginframe.setVisible(false);
 					passwordLogin(tables,UserID,customers);//call employee login page
@@ -126,7 +124,7 @@ public class Login {
 					passwordLogin(tables,UserID,customers);
 				}
 				else {//ID is not valid TRY again
-					
+					IDField.setForeground(Color.RED);
 				}
 				
 				
@@ -165,7 +163,10 @@ public class Login {
 		
 	}
 	public void passwordLogin(Table[] tables,String id,LinkedList<Customer>customers) {
-		String employeeID="9876";//default employee ID prefix
+		test t = new test();
+		LinkedList<Employee>employees=new LinkedList<Employee>();
+		t.setEmployees(employees, "employees.txt");
+		String employeeID="2";//default employee ID prefix
 		String adminID="1212";//default admin ID prefix
 		JFrame loginframe=new JFrame();
 		
@@ -210,10 +211,11 @@ public class Login {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String password =String.valueOf(pasField.getPassword());
-				String truePassword="hasan";//!!!!!!!a password returner func needed.!!!!
-				if(password.equals(truePassword)) {//GO TO employee screen typeADD
+				String truePassword="admin";//!!!!!!!a password returner func needed.!!!!
+				test t = new test();
+				if(t.validateEmployee(employees,Integer.valueOf(id), password)) {//GO TO employee screen typeADD
 					pasField.setBackground(Color.GREEN);
-					if(id.substring(0,4).equals(employeeID)) {//if password is right and id is employeeID
+					if(id.substring(0,1).equals(employeeID)) {//if password is right and id is employeeID
 						s.setEmployeeLogin(true);
 						s.employeeScreen(tables,customers);
 						loginframe.dispose();
@@ -224,6 +226,11 @@ public class Login {
 						loginframe.dispose();
 					}
 					
+				}
+				else if(id.substring(0,4).equals(adminID) && password.equals(truePassword)) {
+					s.setAdminLogin(true);
+					s.adminScreen(tables,customers);
+					loginframe.dispose();
 				}
 				else {//if password is not true
 					label2.setVisible(true);

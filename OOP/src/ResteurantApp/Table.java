@@ -76,12 +76,11 @@ public class Table implements TableInterface {
 	
 	public int goDutch(Customer customer) {
 		int sum = 0;
-		
 		for(int i = 0; i < orders.size(); i++) {
 			if(orders.get(i).getCustomerID() == customer.getUserID()) {
 				sum += (orders.get(i).getProduct().getPrice() * orders.get(i).getProductQuantity());
-				customer.setDiscountCoupons(customer.getDiscountCoupons() + 1);
 				orders.remove(i);
+				i--;
 			}
 		}
 		return sum;
@@ -92,12 +91,15 @@ public class Table implements TableInterface {
 		for(int i = 0; i < orders.size(); i++) {
 			sum += (orders.get(i).getProduct().getPrice() * orders.get(i).getProductQuantity());
 			orders.remove(i);
+			i--;
 		}
 		return sum;
 	}
 	
 	public int useCupon(int price, Customer customer) {
-		int discounter = customer.getDiscountCoupons()/4;
+		int discounter = (int) (customer.getDiscountCoupons()/4.0);
+		if(price<discounter*10)
+			return price;
 		price -= (discounter*10);
 		customer.setDiscountCoupons(customer.getDiscountCoupons() - (discounter * 4) );
 		return price;
