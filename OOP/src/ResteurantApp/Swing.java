@@ -54,7 +54,7 @@ public class Swing {
 		title.setBounds(300, 50, 150, 50);
 		for (int i = 0; i < tables.length; i++) {
 			table=new JButton("Table: "+(i+1));
-			int a =i+1;
+			int a =i;
 			if(i<=4)
 				table.setBounds(100+(110*i), 150, 200, 150);
 			else if(i<=9)
@@ -69,10 +69,10 @@ public class Swing {
 					tableScreen tb = new tableScreen();
 					
 					try {
-						if(a!=15)
-							tb.tableScreenView(tables, customers,a);
-						else
-							tb.tableScreenView(tables, customers,a-1);
+						//if(a!=15)
+						tb.tableScreenView(tables, customers,a);
+						//else
+							//tb.tableScreenView(tables, customers,a-1);
 						tableFrame.dispose();
 					} catch (IOException e1) {
 						// TODO Auto-generated catch block
@@ -122,6 +122,7 @@ public class Swing {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				
 				frame.dispose();
 				frame.setVisible(false);
 				System.exit(0);
@@ -212,12 +213,20 @@ public class Swing {
 	        		signFrame.add(end);
 	        		signFrame.dispose();
 	        		signFrame.setVisible(false);
+	        		t.writeCustomers(customers,"customers.txt");
+	        		
 	        	}
 	        	else if(typeField.getText().equalsIgnoreCase("employee")) {
 	        		//call addUser for Employee
+	        		test t= new test();
+	        		
+	        		t.employees.add(new Employee(nameField.getText(),lastNameField.getText(),Integer.valueOf(phoneNumberField.getText()),
+	        				mailField.getText(),"employee",250,"worker",t.IDCalculator(t.employees.size(),"employee"),"123456"));
 	        		JLabel end = new JLabel("Succesfully Signed In you can go back to menu!");
 	        		end.setBounds(600,600,250,40);
 	        		signFrame.add(end);
+	        		t.writeEmployees(t.employees, "employees.txt");
+	        		
 	        	}
 	        	else {
 	        		//type false

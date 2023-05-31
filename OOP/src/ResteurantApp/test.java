@@ -3,15 +3,18 @@ package ResteurantApp;
 import java.io.*;
 import java.util.*;
 
+	
 
 public class test {
+	
+	public static LinkedList<Employee> employees = new LinkedList<Employee>();
 	
 	public static void main(String[] args) throws IOException {
 	int amountOfTable=15;//This value can be arrenged by resteurant
 	Table[] tables=new Table[amountOfTable];//initiallize tables
 	LinkedList<Customer> customers = new LinkedList<Customer>();//linkedList for customers
 	
-	LinkedList<Employee> employees = new LinkedList<Employee>();//linkedList for employees
+	
 	LinkedList<Product> menu = new LinkedList<Product>();//linkedList for menu
 
 	for(int i = 0; i < tables.length; i++) {//a for loop to detemine tables
@@ -22,7 +25,7 @@ public class test {
 	setMenu(menu,"products.csv");
 	Swing a = new Swing();
 	a.firstMenu(tables, customers);//initiallize GUI
-	writeCustomers(customers,"customers.txt");
+	
 	writeEmployees(employees,"employees.txt");
 	
 	}
@@ -239,7 +242,7 @@ public class test {
 	public boolean validateEmployee(LinkedList<Employee> employees, int id, String password) {//validates the password
 		for(int i = 0; i < employees.size(); i++) {
 			if(employees.get(i).getEmployeeID() == id) {
-				if(employees.get(i).getPassword().equals(password));
+				if(employees.get(i).getPassword().equals(password))
 					return true;
 			}
 		}
