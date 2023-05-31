@@ -180,7 +180,7 @@ public class Login {
 		JButton MenuBtn=new JButton("Menu");
 		JButton SignInBtn=new JButton("SignUp");
 		
-		IDField.setText(id);//IDField comes with default id value IÇI BOS NEDENSE PASSWORD ICIN LENGTH CONTROL LAZIM
+		IDField.setText(id);//IDField comes with default id value 
 		IDField.setForeground(Color.BLACK);
 		IDField.setBackground(Color.GREEN);//set color green
 		
@@ -211,7 +211,7 @@ public class Login {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String password =String.valueOf(pasField.getPassword());
-				String truePassword="admin";//!!!!!!!a password returner func needed.!!!!
+				String truePassword="123456";//
 				test t = new test();
 				if(t.validateEmployee(employees,Integer.valueOf(id), password)) {//GO TO employee screen typeADD
 					pasField.setBackground(Color.GREEN);
@@ -227,7 +227,7 @@ public class Login {
 					}
 					
 				}
-				else if(id.substring(0,4).equals(adminID) && password.equals(truePassword)) {
+				else if(id.substring(0,4).equals(adminID) && password.equals(truePassword)) {//admin login
 					s.setAdminLogin(true);
 					s.adminScreen(tables,customers);
 					loginframe.dispose();
@@ -285,7 +285,7 @@ public class Login {
 		loginframe.setVisible(true);
 		loginframe.getContentPane().setLayout(null);
 		
-		loginframe.add(label);
+		loginframe.add(label);//adding to frame
 		loginframe.add(label1);
 		loginframe.add(label2);
 		loginframe.add(password);

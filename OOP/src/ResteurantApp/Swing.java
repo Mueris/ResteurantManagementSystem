@@ -69,8 +69,10 @@ public class Swing {
 					tableScreen tb = new tableScreen();
 					
 					try {
-						
-						tb.tableScreenView(tables, customers,a);
+						if(a!=15)
+							tb.tableScreenView(tables, customers,a);
+						else
+							tb.tableScreenView(tables, customers,a-1);
 						tableFrame.dispose();
 					} catch (IOException e1) {
 						// TODO Auto-generated catch block
@@ -178,16 +180,16 @@ public class Swing {
 		JTextField mailField= new JTextField();
 		JTextField typeField= new JTextField();
 		//,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,, the bounds
-		nameLabel.setBounds(100, 70, 250, 30);
+		nameLabel.setBounds(100, 70, 250, 30);//name  section
 		nameField.setBounds(100, 100, 250, 40);
 		
-		lastNameLabel.setBounds(100, 150, 250, 30);
+		lastNameLabel.setBounds(100, 150, 250, 30);//lastname  section
 		lastNameField.setBounds(100, 180, 250, 40);
 		
-		phoneNumberLabel.setBounds(100, 230, 250, 30);
+		phoneNumberLabel.setBounds(100, 230, 250, 30);//phone  section
 		phoneNumberField.setBounds(100, 260, 250, 40);
 		
-		mailLabel.setBounds(100, 310, 250, 30);
+		mailLabel.setBounds(100, 310, 250, 30);//mail  section
 		mailField.setBounds(100, 340, 250, 40);
 		
 		typeLabel.setBounds(100, 390, 400, 30);
@@ -372,7 +374,7 @@ public class Swing {
 			});
 			
 			
-			adminScreenFrame.setSize(800,800);
+			adminScreenFrame.setSize(800,800);//default frame settings
 			adminScreenFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			adminScreenFrame.setVisible(true);
 			adminScreenFrame.getContentPane().setLayout(null);
@@ -389,7 +391,7 @@ public class Swing {
 	}
 	public void adminEmployeeScreen(Table[] tables,LinkedList<Customer>customers) {
 		
-		JFrame jf = new JFrame();
+		JFrame jf = new JFrame();//shows admin view 
 		JLabel lb = new JLabel("Employees");
 		lb.setBounds(300,20,250,100);
 		lb.setSize(100,100);
@@ -439,7 +441,7 @@ public class Swing {
 
 		}
 		
-		DefaultTableModel tableModel = new DefaultTableModel(temp,cat);
+		DefaultTableModel tableModel = new DefaultTableModel(temp,cat);//initiallize Jtable for employees
 		JTable list = new JTable(tableModel);
 		list.setVisible(true);
 		list.setSize(500,500);

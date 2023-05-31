@@ -22,6 +22,9 @@ public class test {
 	setMenu(menu,"products.csv");
 	Swing a = new Swing();
 	a.firstMenu(tables, customers);//initiallize GUI
+	writeCustomers(customers,"customers.txt");
+	writeEmployees(employees,"employees.txt");
+	
 	}
 	protected static void setCustomers(LinkedList<Customer> list, String file) {//a function to read file
 	//when the program is started program reads files and implements users.
@@ -112,13 +115,13 @@ public class test {
 			
 	}
 	
-	protected void writeCustomers(LinkedList<Customer> list, String file) {//a function to write file
+	protected static void writeCustomers(LinkedList<Customer> list, String file) {//a function to write file
 	//in the exit, program overwrites the new data to the file.
 		try {
 		      FileWriter fwrite = new FileWriter(file);
 		      for(int i = 0; i < list.size();i ++) {
 			      fwrite.write(list.get(i).getName() + "," + list.get(i).getSurname() + "," + list.get(i).getPhoneNumber() + ","
-			    		  + list.get(i).getEmail() + "," + list.get(i).getType() + "," + list.get(i).getDiscountCoupons() + "," + list.get(i).getUserID() + "\n");
+			    		  + list.get(i).getEmail() + "," + list.get(i).getType() + "," + list.get(i).getDiscountCoupons() + "," + list.get(i).getUserID()+",");
 		      }
 		      fwrite.close();
 		      System.out.println("Successfully wrote to the file.");
@@ -128,14 +131,14 @@ public class test {
 		    }
 	}
 	
-	protected void writeEmployees(LinkedList<Employee> list, String file) {//a function to write file
+	protected static void writeEmployees(LinkedList<Employee> list, String file) {//a function to write file
 		//in the exit, program overwrites the new data to the file.
 			try {
 			      FileWriter fwrite = new FileWriter(file);
 			      for(int i = 0; i < list.size();i ++) {
 				      fwrite.write(list.get(i).getName() + "," + list.get(i).getSurname() + "," + list.get(i).getPhoneNumber() + ","
 				    		  + list.get(i).getEmail() + "," + list.get(i).getType() + "," + list.get(i).getEmployeePrice()
-				    		  + "," + list.get(i).getEmployeePosition() + "," + list.get(i).getEmployeeID() + "," + list.get(i).getPassword() + "\n");
+				    		  + "," + list.get(i).getEmployeePosition() + "," + list.get(i).getEmployeeID() + "," + list.get(i).getPassword()+",");
 			      }
 			      fwrite.close();
 			      System.out.println("Successfully wrote to the file.");
@@ -233,7 +236,7 @@ public class test {
 		products.set(i, newProduct);
 	}
 	
-	public boolean validateEmployee(LinkedList<Employee> employees, int id, String password) {
+	public boolean validateEmployee(LinkedList<Employee> employees, int id, String password) {//validates the password
 		for(int i = 0; i < employees.size(); i++) {
 			if(employees.get(i).getEmployeeID() == id) {
 				if(employees.get(i).getPassword().equals(password));
@@ -250,14 +253,6 @@ public class test {
 
         return null;
     }
-	/*public boolean validateAdmin(LinkedList<Admin> admin, int id, String password) {
-		for(int i = 0; i < admin.size(); i++) {
-			if(admin.get(i) == id) {
-				if(admin.get(i).getPassword().equals(password));
-					return true;
-			}
-		}
-		return false;
-	}*/
+	
 	
 }

@@ -25,16 +25,16 @@ import javax.swing.table.DefaultTableModel;
 
 public class tableScreen {
 	
-	private Customer User1;
-	private Customer User2;
-	private Customer User3;
-	private Customer User4;
+	private Customer User1;//Customer1
+	private Customer User2;//Customer2
+	private Customer User3;//Customer3
+	private Customer User4;//Customer4
 	private Table table;
-	private boolean user1Choosen=false;
-	private boolean user2Choosen=false;
-	private boolean user3Choosen=false;
-	private boolean user4Choosen=false;
-	private boolean tableChoosen=false;
+	private boolean user1Choosen=false;//Customer1 is choosen
+	private boolean user2Choosen=false;//Customer2 is choosen
+	private boolean user3Choosen=false;//Customer3 is choosen
+	private boolean user4Choosen=false;//Customer4 is choosen
+	private boolean tableChoosen=false;//table is choosen
 	private LinkedList<Order> orders= new LinkedList<Order>();
 	private LinkedList<Order> user1Orders= new LinkedList<Order>();
 	private LinkedList<Order> user2Orders= new LinkedList<Order>();
@@ -201,7 +201,7 @@ public class tableScreen {
 		this.user4Orders = user4Orders;
 	}
 	
-	public void setChoosen1True(){
+	public void setChoosen1True(){//sets if a user choosen
 		this.user1Choosen=true;
 		this.user2Choosen=false;
 		this.user3Choosen=false;
@@ -209,7 +209,7 @@ public class tableScreen {
 		this.tableChoosen=false;
 		
 	}
-	public void setChoosen2True(){
+	public void setChoosen2True(){//sets if a user choosen
 		this.user2Choosen=true;
 		this.user1Choosen=false;
 		this.user3Choosen=false;
@@ -217,7 +217,7 @@ public class tableScreen {
 		this.tableChoosen=false;
 		
 	}
-	public void setChoosen3True(){
+	public void setChoosen3True(){//sets if a user choosen
 		this.user3Choosen=true;
 		this.user2Choosen=false;
 		this.user1Choosen=false;
@@ -225,7 +225,7 @@ public class tableScreen {
 		this.tableChoosen=false;
 		
 	}
-	public void setChoosen4True(){
+	public void setChoosen4True(){//sets if a user choosen
 		this.user4Choosen=true;
 		this.user2Choosen=false;
 		this.user3Choosen=false;
@@ -233,7 +233,7 @@ public class tableScreen {
 		this.tableChoosen=false;
 		
 	}
-	public void setTableTrue(){
+	public void setTableTrue(){//sets if a user choosen
 		this.tableChoosen=true;
 		this.user2Choosen=false;
 		this.user3Choosen=false;
@@ -243,60 +243,8 @@ public class tableScreen {
 	}
 	
 	
-	public void tableScreenView(Table[] tables, LinkedList<Customer>customers,int tableID) throws IOException {
+	public void tableScreenView(Table[] tables, LinkedList<Customer>customers,int tableID) throws IOException {//shows table screen
 		JFrame tableScreen = new JFrame();
-		
-		/**LinkedList orders = tables[tableID].getOrders();
-		String[] customer=new String[orders.size()];
-		Product[] product=new Product[orders.size()];
-		String[] productName=new String[orders.size()];
-		String[] productID= new String[orders.size()];
-		String[] quantity=new String[orders.size()];
-		String[] orderID=new String[orders.size()];
-		JButton[] update = new JButton[orders.size()];
-		String[] categories = {"Customer", "Food","productID", "Quantity", "orderID"};//price icin quantitiy times foodPrice hesaplanabilir
-		String[][] rowData = new String[6][orders.size()];
-		
-		
-		for (int i = 0; i < orders.size(); i++) {
-			customer[i]=String.valueOf(((Order) orders.get(i)).getCustomerID());
-			orderID[i]=String.valueOf(((Order) orders.get(i)).getOrderID());
-			product[i]=((Order) orders.get(i)).getProduct();
-			productName[i]=product[i].getFood();
-			productID[i]=String.valueOf(product[i].getSpecialID());
-			quantity[i]=String.valueOf(((Order) orders.get(i)).getProductQuantity());
-
-		}
-		rowData[0]=customer;
-		rowData[1]=productName;
-		rowData[2]=productID;
-		rowData[3]=quantity;
-		rowData[4]=orderID;
-		
-		
-		
-		DefaultTableModel tableModel = new DefaultTableModel(rowData,categories);
-		JTable list = new JTable(tableModel);
-		list.setVisible(true);
-		list.setBounds(350, 50,400, 400);
-		list.setBackground(null);
-		//list.setRowSelectionAllowed(tableChoosen);ROW SEÇİMİ YAPILIYOR
-		
-		this.orders =tables[tableID].getOrders();//Separates the Customer orders and assigns to them
-		for (int i = 0; i < orders.size(); i++) {
-			if(User1.getUserID()==((Order)orders.get(i)).getCustomerID()) {
-				user1Orders.add((Order) orders.get(i));
-			}
-			else if(User2.getUserID()==((Order)orders.get(i)).getCustomerID()) {
-				user2Orders.add((Order) orders.get(i));
-			}
-			else if(User3.getUserID()==((Order)orders.get(i)).getCustomerID()) {
-				user2Orders.add((Order) orders.get(i));
-			}
-			else if(User4.getUserID()==((Order)orders.get(i)).getCustomerID()) {
-				user2Orders.add((Order) orders.get(i));
-			}
-		}**/
 		
 		
 		LinkedList<Product> menu=new LinkedList<Product>();
@@ -308,12 +256,7 @@ public class tableScreen {
 		String[] foodName = new String[menu.size()];
 		String[] Category = new String[menu.size()];
 		
-		String[] categories = {"Category", "Food Name","Price"};//price icin quantitiy times foodPrice hesaplanabilir
-		
-		
-		
-		
-		
+		String[] categories = {"Category", "Food Name","Price"};
 		
 		for (int i = 0; i < menu.size(); i++) {
 			price[i]=String.valueOf("₺"+menu.get(i).getPrice());
@@ -329,7 +272,7 @@ public class tableScreen {
 		
 		
 		
-		DefaultTableModel tableModel = new DefaultTableModel(rows,categories);
+		DefaultTableModel tableModel = new DefaultTableModel(rows,categories);//shows table
 		JTable list = new JTable(tableModel);
 		list.setVisible(true);
 		list.setSize(400,300);
@@ -445,7 +388,7 @@ public class tableScreen {
 		User4Name.setBounds(305,150,100,40);
 		
 		
-		if(tables[tableID].getCustomers().size()>=1) {
+		if(tables[tableID].getCustomers().size()>=1) {//refills initiallized table
 			User1=tables[tableID].getCustomers().get(0);
 			User1Name.setText(User1.getName());
 			User1Name.setVisible(true);
