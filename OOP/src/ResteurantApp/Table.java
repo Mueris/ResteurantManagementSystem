@@ -79,8 +79,8 @@ public class Table implements TableInterface {
 		for(int i = 0; i < orders.size(); i++) {
 			if(orders.get(i).getCustomerID() == customer.getUserID()) {
 				sum += (orders.get(i).getProduct().getPrice() * orders.get(i).getProductQuantity());
-				orders.remove(i);
-				i--;
+				//orders.remove(i);
+				//i--;
 			}
 		}
 		return sum;
@@ -90,8 +90,8 @@ public class Table implements TableInterface {
 		int sum = 0;
 		for(int i = 0; i < orders.size(); i++) {
 			sum += (orders.get(i).getProduct().getPrice() * orders.get(i).getProductQuantity());
-			orders.remove(i);
-			i--;
+			//orders.remove(i);
+			//i--;
 		}
 		return sum;
 	}

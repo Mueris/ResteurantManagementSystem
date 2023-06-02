@@ -241,6 +241,100 @@ public class tableScreen {
 		this.user4Choosen=false;
 		
 	}
+	public LinkedList<Order> personalOrderReturner(LinkedList<Order > tableOrders, Customer customer) {//Function gets the customer and table orders, @returns related user orders
+		LinkedList<Order> userOrders=new LinkedList<Order>();
+		for (int i = 0; i < tableOrders.size(); i++) {
+			if(tableOrders.get(i).getCustomerID()==customer.getUserID()) {//controls and gets the orders which is belong to related user
+				userOrders.add(tableOrders.get(i));
+			}
+		}
+		return userOrders;
+	}
+	public void paymentPage(LinkedList<Order> userOrders,Table table,Customer customer) {
+		JFrame paymentFrame=new JFrame();
+		
+		JButton useDiscount = new JButton("Use Discount");
+		JButton pay = new JButton("Pay");
+		
+		JLabel wellcomeMessage = new JLabel("Please Choose Your payment method");
+		JLabel orders= new JLabel("Wellcome"+customer.getName()+"Your Orders are listed Below");
+		
+		wellcomeMessage.setBounds(50,100,250,40);
+		orders.setBounds(500,50,250,40);
+		
+		useDiscount.setBounds(400,500,150,50);
+		pay.setBounds(560,500,120,50);
+		
+		useDiscount.setBackground(Color.GREEN);
+		
+		Object[][] allInfo=new Object[userOrders.size()][3];
+		String[] productName=new String[userOrders.size()];
+		int[] productPrice = new int[userOrders.size()];
+		int[] productAmount= new int[userOrders.size()];
+		String[] columns = {"Product","Product Amount","Product Price"};
+		
+		for (int i = 0; i < userOrders.size(); i++) {//loop to seperate titles to create a JTable
+			productName[i]=userOrders.get(i).getProduct().getFood();
+			productPrice[i]=userOrders.get(i).getProduct().getPrice();
+			productAmount[i]=userOrders.get(i).getProductQuantity();
+			allInfo[i][0]=productName[i];
+			allInfo[i][1]=productPrice[i];
+			allInfo[i][2]=productAmount[i];
+		}
+		DefaultTableModel model = new DefaultTableModel(allInfo,columns);
+		JTable list = new JTable(model);
+		list.setVisible(true);
+		list.setSize(400,300);
+		list.setBounds(350, 100,400, 300);
+		list.setBackground(null);
+		list.setRowSelectionAllowed(true);
+		JScrollPane sp = new JScrollPane(list);
+		list.setBorder(BorderFactory.createMatteBorder(01, 01, 01, 01,Color.BLUE));
+		
+		useDiscount.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int totaly =table.goDutch(User4);//calculates the neccesary amount NORMALDE SILIYORDU KAPATTIM DEGISIKLIKLER 4. USERDA
+				int discountedy = table.useCupon(totaly, User4);//calculates discount cupon
+				JLabel totalMes= new JLabel("Total Amount:");
+				JLabel discounted = new JLabel("After Discount");
+				
+				discounted.setBounds(150,600,150,50);
+				totalMes.setBounds(150,600,150,50);
+				
+				paymentFrame.add(totalMes);
+				paymentFrame.add(discounted);
+				
+				
+			}
+		});
+		
+		pay.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
+		paymentFrame.setSize(800,800);
+		paymentFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		paymentFrame.setVisible(true);
+		paymentFrame.getContentPane().setLayout(null);
+		
+		
+		paymentFrame.add(wellcomeMessage);
+		paymentFrame.add(sp);
+		paymentFrame.add(orders);
+		paymentFrame.add(list);
+		paymentFrame.add(wellcomeMessage);
+		paymentFrame.add(pay);
+		paymentFrame.add(useDiscount);
+		
+		
+	}
 	
 	
 	public void tableScreenView(Table[] tables, LinkedList<Customer>customers,int tableID) throws IOException {//shows table screen
@@ -448,6 +542,9 @@ public class tableScreen {
 			public void actionPerformed(ActionEvent e) {
 				total.setVisible(true);
 				discounted.setVisible(true);
+				LinkedList<Order> orders = personalOrderReturner(tables[tableID].getOrders(),User4);
+				paymentPage(orders, tables[tableID], User4);
+				
 				int totaly =tables[tableID].goDutch(User4);
 				int discountedy = tables[tableID].useCupon(totaly, User4);
 				discounted.setText("Discounted paid Value : "+discountedy);
@@ -455,6 +552,8 @@ public class tableScreen {
 				if(discountedy!=totaly)
 					discounted.setForeground(Color.BLUE);
 				success.setVisible(true);
+				System.out.println(tables[tableID].getOrders().size());
+				
 				
 				
 				
@@ -470,7 +569,7 @@ public class tableScreen {
 				String name = (String) list.getModel().getValueAt(row,1);
 				test t = new test();
 				Product pr =t.searchProduct(name, menu);
-				tables[tableID].getOrders().add(new Order(pr,User1.getUserID(),1,tableID));	
+				tables[tableID].getOrders().add(new Order(pr,User1.getUserID(),1,tableID));
 				User1.setDiscountCoupons(User1.getDiscountCoupons()+1);
 			}
 		});
