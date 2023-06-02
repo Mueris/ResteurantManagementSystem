@@ -305,9 +305,13 @@ public class tableScreen {
 		JLabel discounted = new JLabel("Discounted Paid Value:");
 		JLabel success = new JLabel("Thank you for your payment");
 			
-		total.setBounds(500,500,250,40);
-		discounted.setBounds(500,550,250,40);
-		success.setBounds(500,600,250,40);
+		total.setBounds(500,400,250,40);
+		discounted.setBounds(535,435,250,40);
+		success.setBounds(535,470,250,40);
+		
+		total.setForeground(Color.RED);
+		discounted.setForeground(Color.RED);
+		success.setForeground(Color.GREEN);
 		
 		total.setVisible(false);
 		discounted.setVisible(false);
@@ -448,6 +452,8 @@ public class tableScreen {
 				int discountedy = tables[tableID].useCupon(totaly, User4);
 				discounted.setText("Discounted paid Value : "+discountedy);
 				total.setText("Total Value without discount : "+totaly);
+				if(discountedy!=totaly)
+					discounted.setForeground(Color.BLUE);
 				success.setVisible(true);
 				
 				
@@ -478,6 +484,8 @@ public class tableScreen {
 				int discountedy = tables[tableID].useCupon(totaly, User1);
 				discounted.setText("Discounted paid Value : "+discountedy);
 				total.setText("Total Value without discount : "+totaly);
+				if(discountedy!=totaly)
+					discounted.setForeground(Color.BLUE);
 				success.setVisible(true);
 				
 			}
@@ -505,6 +513,8 @@ public class tableScreen {
 				int discountedy = tables[tableID].useCupon(totaly, User2);
 				discounted.setText("Discounted paid Value : "+discountedy);
 				total.setText("Total Value without discount : "+totaly);
+				if(discountedy!=totaly)
+					discounted.setForeground(Color.BLUE);
 				success.setVisible(true);
 				
 			}
@@ -532,6 +542,8 @@ public class tableScreen {
 				int discountedy = tables[tableID].useCupon(totaly, User3);
 				discounted.setText("Discounted paid Value : "+discountedy);
 				total.setText("Total Value without discount : "+totaly);
+				if(discountedy!=totaly)
+					discounted.setForeground(Color.BLUE);
 				success.setVisible(true);
 				
 			}
@@ -544,6 +556,7 @@ public class tableScreen {
 				discounted.setVisible(false);
 				int totaly =tables[tableID].payOrders();
 				total.setText("Total Value without discount : "+totaly);
+				
 				success.setVisible(true);
 				
 			}

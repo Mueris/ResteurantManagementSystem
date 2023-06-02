@@ -3,7 +3,7 @@ package ResteurantApp;
 import java.io.*;
 import java.util.*;
 
-	
+	//
 
 public class test {
 	
@@ -24,8 +24,9 @@ public class test {
 	setEmployees(employees, "employees.txt");
 	setMenu(menu,"products.csv");
 	Swing a = new Swing();
-	a.firstMenu(tables, customers);//initiallize GUI
-	
+	//a.firstMenu(tables, customers);//initiallize GUI
+	tableScreen tb= new tableScreen();
+	tb.tableScreenView(tables, customers, 5);
 	writeEmployees(employees,"employees.txt");
 	
 	}
